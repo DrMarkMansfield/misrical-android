@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_version">1.3</string>
+    <string name="app_version_string">Version 1.3</string>
+    <string name="app_name">MisriCal</string>
+    <string name="bearing_opt_label">Settings</string>
+    <string name="set_gregorian_label">Set Gregorian</string>
+    <string name="set_misri_label">Set Misri</string>
+    <string name="about_opt_label">About</string>
+    <string name="share_opt_label">Share</string>
+    <string name="exit_opt_label">Exit</string>
+    <string name="miqaat_opt_label">Miqaat</string>
+    <string name="bearings_always_pref">Automatic Bearing Updates </string>
+    <string name="bearings_always_summary">Bearings updates always</string>
+    <string name="bearings_on_touch_pref">Bearing Updates On Touch</string>
+    <string name="bearings_on_touch_summary">Touch to update bearing</string>
+    <string name="bearings_off_pref">Bearings Disabled</string>
+    <string name="bearings_off_summary">Save some battery</string>
+    <string name="settings_title">Settings</string>
+    <string name="miqaat_title">Miqaat</string>  
+    <string name="about_title">MisriCal from OUIKKA</string> 
+    <string name="copyright_string">"Copyright \u00A9 2012 Ouikka Enterprises"</string>
+    <string name="bearing_number_label">Bearing:</string>
+    <string name="bearing_updates_off">Updates: Off</string>
+    <string name="bearing_updates_auto">Updates: Auto</string>
+    <string name="bearing_updates_touch">Updates: On Touch</string>
+    <string name="bearing_off">Off</string>
+    <string name="bearing_touch">Touch</string>
+    <string name="ouikka_url">https://play.google.com/store/apps/details?id=com.ouikka.MisriCalendar</string>
+    <string name="miqaat_alert_preference">alerts</string>
+    <string name="miqaat_alerts_functioning_correctly">Miqaat alerts functioning correctly</string>
+    <string name="test_miqaat_text">Test Miqaat</string>
+    <string name="aboutIconDesc">Misri Icon</string>
+    <string name="aboutLabel1">Misri/Gregorian Calendar Converter</string>
+    <string name="aboutEmailButtonLabel">E-MAIL</string>
+    <string name="aboutContactLabel">Contact/Feedback/Help</string>
+    <string name="aboutWidgetLabel">Use the MisriCal Widget to see the date on your home screen!</string>
+    <string name="auto">Auto</string>
+    <string name="mecca">Mecca</string>
+    <string name="north">North</string>
+    <string name="download_string">Download MisriCal+</string>
+    <string name="misricalplus_features">MisriCal+ allows Misri to Gregorian conversions with additional functionality to follow in the future!</string>
+    <string name="Su">Su</string>
+    <string name="Mo">Mo</string>
+    <string name="Tu">Tu</string>
+    <string name="We">We</string>
+    <string name="Th">Th</string>
+    <string name="Fr">Fr</string>
+    <string name="Sa">Sa</string>
+    <string name="Today">Today</string>
+    <string name="DayPlus">Day+</string>
+    <string name="DayMinus">Day-</string>
+    <string name="tips">In order for the Mecca pointer to function correctly location data is required. This can be sourced from your network provider, WIFI or GPS. It may be necessary to enable the use of wireless networks in your location settings to use your network provider.</string>
+    <string name="tips2">If your accelerometer is not calibrated correctly then the pointers will not be correct. If the North pointer does not point where you expect then it may be necessary to recalibrate your device by holding it parallel to the ground and moving it in a figure-8.</string>
+             
+    
+</resources>

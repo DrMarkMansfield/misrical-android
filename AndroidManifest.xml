@@ -1,0 +1,52 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="com.squizzard.MisriCalendar" android:versionCode="7"
+	android:versionName="@string/app_version">
+	<uses-sdk android:minSdkVersion="7" android:targetSdkVersion="17"/>
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.LOCATION" />
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+	<application android:icon="@drawable/ic_launcher1"
+		android:label="@string/app_name"
+		android:allowBackup="false">
+		<activity android:name=".CalendarConvert"
+			android:label="@string/app_name" android:launchMode="singleInstance">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+				<category android:name="android.intent.category.MONKEY" />
+			</intent-filter>
+		</activity>
+		<activity android:name=".BearingPrefs" android:label="@string/settings_title"
+			android:noHistory="true" />
+		<activity android:name=".About" android:label="@string/about_title"
+			android:noHistory="true" />
+		<activity android:name=".Miqaat" android:label="@string/miqaat_title" 
+			android:noHistory="false" />
+		<activity android:name=".MiqaatMonthView" android:label=""
+			android:noHistory="true" 
+			android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"/>
+		<receiver android:name=".AlarmCoordinator">
+          <intent-filter>
+            	<action android:name="android.intent.action.BOOT_COMPLETED"/>
+       	 </intent-filter>
+	    </receiver>
+	    <receiver android:name="com.squizzard.MisriCalendar.AlarmReceiver"
+	        android:exported="false">
+			<intent-filter>
+			    <action android:name="com.squizzard.MisriCalendar.MORNING_CHECK_MIQAAT_INTENT" />
+			    <action android:name="com.squizzard.MisriCalendar.EVENING_CHECK_MIQAAT_INTENT" />
+			</intent-filter>
+	    </receiver>
+		<receiver android:name="com.squizzard.MisriCalendar.MisriAppWidgetProvider">
+			<intent-filter>
+				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+				<action android:name="FLIP_DATE_ACTION" />
+			</intent-filter>
+			<meta-data android:name="android.appwidget.provider"
+				android:resource="@xml/misri_widget" />
+		</receiver>
+	</application>
+</manifest>
