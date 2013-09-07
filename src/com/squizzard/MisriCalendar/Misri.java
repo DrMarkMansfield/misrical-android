@@ -311,7 +311,7 @@ public class Misri {
 				break;//breaks out of the for loop
 			}
 		}
-		if(gMonth==-1){//implying a greater number hasnt been found in the first column
+		if(gMonth==-1){//implying a greater number hasn't been found in the first column
 			for(int j=0;j<gregorian_month.length;j++){
 				if(gregorian_month[j][2]>=spareYears){
 					if(j==0){//spreYrs=366
@@ -326,7 +326,7 @@ public class Misri {
 				}
 			}
 		}
-		if(gMonth==-1){//implying a greater number hasnt been found in the first or second column
+		if(gMonth==-1){//implying a greater number hasn't been found in the first or second column
 			for(int j=0;j<gregorian_month.length;j++){
 				if(gregorian_month[j][3]>=spareYears){
 					if(j==0){
@@ -342,7 +342,7 @@ public class Misri {
 				}
 			}
 		}
-		if(gMonth==-1){//implying a greater number hasnt been found in the first or second column
+		if(gMonth==-1){//implying a greater number hasn't been found in the first or second column
 			for(int j=0;j<gregorian_month.length;j++){
 				if(gregorian_month[j][4]>=spareYears){
 					if(j==0){
@@ -381,15 +381,23 @@ public class Misri {
 		int gregorianOrdinal = getGregorianAsOrdinal(y, m, d);
 		for(int j=0;j<misri_cycle_30.length; j++){
 			if(misri_cycle_30[j][1]>=gregorianOrdinal){
+				try{
 				misriYear=misri_cycle_30[j-1][0];
+				}catch(ArrayIndexOutOfBoundsException e){
+					return "Out of calendar range!";
+				}
 				cycle30Diff = gregorianOrdinal-misri_cycle_30[j-1][1];
 				break;
 			}
 		}
 		for(int j=0;j<misri_year.length;j++){
 			if(misri_year[j][1]>=cycle30Diff){
+				try{
 				misriYear=misriYear+misri_year[j-1][0];
 				yearDiff = cycle30Diff-misri_year[j-1][1];
+				}catch(ArrayIndexOutOfBoundsException e){
+					return "Out of calendar range!";
+				}
 				break;
 			}
 		}
@@ -488,18 +496,18 @@ public class Misri {
 
 	protected String getMisriMonth(final int month) {
 		switch(month-1){
-		case 0: return " Moharram-ul-Haram ";
-		case 1: return " Safar-ul-Muzaffar ";
-		case 2: return " Rabi-ul-Awwal ";
-		case 3: return " Rabi-ul-Akhar ";
-		case 4: return " Jamadil-Ula ";
-		case 5: return " Jamadil-Ukhra ";
-		case 6: return " Rajab-ul-Asab ";
-		case 7: return " Shaban-ul-Karim ";
+		case 0: return " Moharram-al-Haram ";
+		case 1: return " Safar-al-Muzaffar ";
+		case 2: return " Rabi-al-Awwal ";
+		case 3: return " Rabi-al-Aakhar ";
+		case 4: return " Jumada-al-Ulaa ";
+		case 5: return " Jamada-al-Ukhra ";
+		case 6: return " Rajab-al-Asab ";
+		case 7: return " Shaban-al-Karim ";
 		case 8: return " Ramadan-al-Moazzam ";
 		case 9: return " Shawwal-al-Mukarram ";
-		case 10: return " Zilqadatil-Haram ";
-		case 11: return " Zilhajjatil-Haram ";
+		case 10: return " Zilqad-al-Haraam ";
+		case 11: return " Zilhajj-al-Haraam ";
 		default: return "";
 		}
 	}
