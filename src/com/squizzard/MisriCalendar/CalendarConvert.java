@@ -43,8 +43,9 @@ import android.widget.Toast;
 
 public class CalendarConvert extends Activity implements OnClickListener, SensorEventListener, LocationListener{//make the location listener into an inner class
 
-	static final int DATE_DIALOG_ID = 0;
-	static final int MISRI_DIALOG_ID = 1;
+	private static final int DATE_DIALOG_ID = 0;
+	private static final int MISRI_DIALOG_ID = 1;
+	private final String CALENDAR_STATE = "CALENDAR_STATE";
 	static Dialog returnDialog;
 	private TextView setGregorianButton; 
     private TextView setMisriButton;
@@ -56,11 +57,11 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 	private ImageView arrowImageNorth;
 	private ImageView arrowImageMecca;
 	private Misri dateConverter;
-	private Calendar c;
-	float startRotateNorth;
-	float endRotateNorth;
-	float startRotateMecca;
-	float endRotateMecca;
+	private Calendar c = Calendar.getInstance();
+	private float startRotateNorth;
+	private float endRotateNorth;
+	private float startRotateMecca;
+	private float endRotateMecca;
 	private GeomagneticField geoField;
 	private Location location;
 	private LocationManager locMgr;
@@ -73,7 +74,6 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 	private float declination;
 	private Display display;	
 	private BearingOptions bearingOptions = null;
-	static final String TAG = "DebugCalendarConvert";
 	private SharedPreferences sharedPreferences;
 	private OnSharedPreferenceChangeListener onSharedPreferenceChangeListener;
 	private Location mecca;
@@ -85,6 +85,10 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		if(savedInstanceState != null){
+			c = (Calendar) savedInstanceState.getSerializable(CALENDAR_STATE);
+		}
 		setContentView(R.layout.main);
 		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 		misriText = (TextView)findViewById(R.id.convertedDate);
@@ -106,15 +110,14 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 		mecca = new Location("mecca");
 		mecca.setLatitude(21.427);
 		mecca.setLongitude(39.814);
-		weekdayButtons[0] =  (TextView) findViewById(R.id.sunButton);
+		weekdayButtons[0] = (TextView) findViewById(R.id.sunButton);
 		weekdayButtons[1] = (TextView) findViewById(R.id.monButton);
 		weekdayButtons[2] = (TextView) findViewById(R.id.tueButton);
 		weekdayButtons[3] = (TextView) findViewById(R.id.wedButton);
 		weekdayButtons[4] = (TextView) findViewById(R.id.thuButton);
 		weekdayButtons[5] = (TextView) findViewById(R.id.friButton);
 		weekdayButtons[6] = (TextView) findViewById(R.id.satButton);
-		c = Calendar.getInstance();
-		highLightDay(c);
+	
 		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);   
 		accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		magneticSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
@@ -122,11 +125,10 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 		locationCriteria.setBearingRequired(true);
 		locationCriteria.setAccuracy(Criteria.ACCURACY_FINE);
 		locMgr = (LocationManager) getSystemService(LOCATION_SERVICE);
-		setGregorianText(c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.MONTH), c.get(Calendar.YEAR));//set gregorian date
-		setMisriText(c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH),c.get(Calendar.YEAR));//will set the text in the misri textbox
+		
+		updateDisplay();
+		
 		startRotateNorth=endRotateNorth=startRotateMecca=endRotateMecca=0;
-		
-		
 		onSharedPreferenceChangeListener = new OnSharedPreferenceChangeListener(){
 
 			public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
@@ -180,6 +182,12 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 			else weekdayButtons[d].setBackgroundColor(getResources().getColor(R.color.notTodayButton));
 		}
 	}
+	
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putSerializable(CALENDAR_STATE, c);
+	}
 
 	@Override
 	protected void onResume(){
@@ -192,14 +200,13 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 		sensorManager.registerListener(this, magneticSensor, SensorManager.SENSOR_DELAY_NORMAL);
 		//get the latest location from the best sensor
 		locMgr.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, this);
-		//locMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, this);
 		ConnectivityManager connectivityMgr = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-	
-        NetworkInfo network = connectivityMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+		NetworkInfo network = connectivityMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 		NetworkInfo wifi = connectivityMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
 		providerString = "No Location Available";
-		
+
 		if(location==null && network!=null){
 			if(network.isConnected()){
 				location = locMgr.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
@@ -209,12 +216,12 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 				}
 			}
 		}
-		
+
 		if(location==null && locMgr.isProviderEnabled(LocationManager.GPS_PROVIDER)){
 			location = locMgr.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 			if (location!=null) {providerString = "GPS";}
 		}
-		
+
 		if(location==null && wifi.isConnected()) {
 			providerString="WIFI";
 			location = locMgr.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
@@ -246,24 +253,24 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 
 		case R.id.dayPlusButton:
 			c.add(Calendar.DAY_OF_MONTH, 1);
-			highLightDay(c);
-			setGregorianText(c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.MONTH), c.get(Calendar.YEAR));
-			setMisriText(c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.MONTH), c.get(Calendar.YEAR));
+			updateDisplay();
 			break;
 
 		case R.id.dayMinusButton:
 			c.add(Calendar.DAY_OF_MONTH, -1);
-			highLightDay(c);
-			setGregorianText(c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.MONTH), c.get(Calendar.YEAR));
-			setMisriText(c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.MONTH), c.get(Calendar.YEAR));
+			updateDisplay();
 			break;
 
 		case R.id.todayButton:
 			c = Calendar.getInstance();
-			setGregorianText(c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.MONTH), c.get(Calendar.YEAR));
-			setMisriText(c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.MONTH), c.get(Calendar.YEAR));
-			highLightDay(c);
+			updateDisplay();
 		}
+	}
+	
+	private void updateDisplay(){
+		setGregorianText(c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.MONTH), c.get(Calendar.YEAR));
+		setMisriText(c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.MONTH), c.get(Calendar.YEAR));
+		highLightDay(c);
 	}
 
 	private void setMisriText(int dayOfMonth, int monthOfYear, int year) {
@@ -340,7 +347,6 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 			Intent bearingOptionIntent = new Intent(this, BearingPrefs.class);
 			bearingOptionIntent.putExtra("PROVIDER", providerString);
 			bearingOptionIntent.putExtra("BEARING_TO_MECCA", bearingToMeccaString);
-			//bearingOptionIntent.putExtra("ACCURACY", accuracyString);
 			startActivity(bearingOptionIntent);
 			return true;
 		case R.id.share:
@@ -419,12 +425,6 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 		sensorManager.unregisterListener(this, magneticSensor);
 		locMgr.removeUpdates(this);
 	}
-
-	@Override
-	protected void onStop(){
-		super.onStop();
-	}
-
 
 	private void getGeomagneticField() {
 		try{
