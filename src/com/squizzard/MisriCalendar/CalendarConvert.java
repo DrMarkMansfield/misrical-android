@@ -1,9 +1,5 @@
 package com.squizzard.MisriCalendar;
 
-//Changes
-//12 November 2011 V1.02 Fix for Hirji turn of decade
-
-import java.io.File;
 import java.util.Calendar;
 import com.squizzard.MisriCalendar.BearingPrefs.BearingOptions;
 import android.app.Activity;
@@ -29,7 +25,6 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -48,16 +43,14 @@ import android.widget.Toast;
 
 public class CalendarConvert extends Activity implements OnClickListener, SensorEventListener, LocationListener{//make the location listener into an inner class
 
-	static final int DATE_DIALOG_ID=0;
-	static final int MISRI_DIALOG_ID=1;
+	static final int DATE_DIALOG_ID = 0;
+	static final int MISRI_DIALOG_ID = 1;
 	static Dialog returnDialog;
 	private TextView setGregorianButton; 
     private TextView setMisriButton;
 	private TextView[] weekdayButtons = new TextView[7];//monButton, tueButton, wedButton, thuButton, friButton, satButton, sunButton;
 	static TextView misriText;
-	static TextView eventText;
-	private TextView bearingText;
-	private TextView bearingField;
+	static TextView eventText;;
 	static TextView gregorianText;
 	private TextView setTodayButton;
 	private ImageView arrowImageNorth;
@@ -88,10 +81,7 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 	private String providerString;
 	private View dayPlusButton;
 	private View dayMinusButton;
-	File dir = Environment.getExternalStorageDirectory();
 
-
-	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -99,8 +89,6 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 		misriText = (TextView)findViewById(R.id.convertedDate);
 		eventText = (TextView)findViewById(R.id.eventText);
-		bearingText = (TextView)findViewById(R.id.bearingMode);
-		bearingField = (TextView)findViewById(R.id.bearing);
 		gregorianText = (TextView)findViewById(R.id.dateGregorian);
 		setGregorianButton=(TextView)findViewById(R.id.setGregorianButton);
 		setMisriButton=(TextView)findViewById(R.id.setMisriButton);
@@ -134,8 +122,6 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 		locationCriteria.setBearingRequired(true);
 		locationCriteria.setAccuracy(Criteria.ACCURACY_FINE);
 		locMgr = (LocationManager) getSystemService(LOCATION_SERVICE);
-		//setGregorianText(todayDay, todayMonth, todayYear);//set gregorian date
-		//setMisriText(todayDay,todayMonth,todayYear);//will set the text in the misri textbox
 		setGregorianText(c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.MONTH), c.get(Calendar.YEAR));//set gregorian date
 		setMisriText(c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH),c.get(Calendar.YEAR));//will set the text in the misri textbox
 		startRotateNorth=endRotateNorth=startRotateMecca=endRotateMecca=0;
@@ -146,37 +132,19 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 			public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
 				bearingOptions = BearingPrefs.getBearingMode(getApplicationContext());
 				if(bearingOptions == BearingOptions.ON_TOUCH){
-					setBearingText(getResources().getString(R.string.bearing_updates_touch));
 					//point arrows north  endRotationNorth/Mecca=0
 					makeRotation(arrowImageNorth, true);
 					makeRotation(arrowImageMecca, true);
 				}
 				if(bearingOptions == BearingOptions.OFF){ 
-					setBearingText(getResources().getString(R.string.bearing_updates_off));
 					//point the arrow north: endRotationNorth/Mecca=0 
 					makeRotation(arrowImageNorth, true);
 					makeRotation(arrowImageMecca, true);
-					bearingField.setText(getResources().getString(R.string.bearing_off));
-				}
-				if(bearingOptions == BearingOptions.ALWAYS_ON){
-					setBearingText(getResources().getString(R.string.bearing_updates_auto));
 				}
 			}
 		};
 		sharedPreferences.registerOnSharedPreferenceChangeListener(onSharedPreferenceChangeListener);
 		bearingOptions = BearingPrefs.getBearingMode(getApplicationContext());
-
-		if(bearingOptions == BearingOptions.ON_TOUCH){
-			setBearingText(getResources().getString(R.string.bearing_updates_touch));
-			bearingField.setText("Touch");
-		}
-		if(bearingOptions == BearingOptions.OFF){ 
-			setBearingText(getResources().getString(R.string.bearing_updates_off));
-			bearingField.setText(getResources().getString(R.string.bearing_off));
-		}
-		if(bearingOptions == BearingOptions.ALWAYS_ON){
-			setBearingText(getResources().getString(R.string.bearing_updates_auto));
-		}
 
 		arrowImageNorth.setOnTouchListener(new OnTouchListener()
 		{
@@ -188,7 +156,7 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 				return false;
 			}	
 		}
-		);//end touch listener
+		);
 
 		arrowImageMecca.setOnTouchListener(new OnTouchListener()
 		{
@@ -200,11 +168,10 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 				return false;
 			}	
 		}
-		);//end touch listener
-	} //end onCreate()
+		);
+	} 
 
 	private void highLightDay(Calendar c2) {
-		//what day is today
 		int today = c2.get(Calendar.DAY_OF_WEEK);//Sunday is 1
 		for(int d=0;d<7;d++){
 			if(d==today-1){
@@ -219,8 +186,7 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 		super.onResume();
 		location=null;
 		bearingToMeccaString="";
-		
-		//register the sensors
+
 		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE); 
 		sensorManager.registerListener(this, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
 		sensorManager.registerListener(this, magneticSensor, SensorManager.SENSOR_DELAY_NORMAL);
@@ -235,13 +201,12 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 		providerString = "No Location Available";
 		
 		if(location==null && network!=null){
-			
 			if(network.isConnected()){
-			location = locMgr.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-			providerString = network.getExtraInfo();
-			if(providerString.equals("No Provider Connection")||providerString==null||providerString.equals("")){
-				providerString="NETWORK";
-			}
+				location = locMgr.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+				providerString = network.getExtraInfo();
+				if(providerString.equals("No Provider Connection")||providerString==null||providerString.equals("")){
+					providerString="NETWORK";
+				}
 			}
 		}
 		
@@ -268,16 +233,11 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 		}
 	}
 
-	private void setBearingText(String text){
-		bearingText.setText(text);
-	}
-
+	@SuppressWarnings("deprecation")
 	public void onClick(View v) {
 		switch(v.getId()){
 		case R.id.setGregorianButton: 
 			showDialog(DATE_DIALOG_ID);
-			//Toast toast = Toast.makeText(getApplicationContext(), "MisriCal+ with reverse conversion is now available from Google Play", Toast.LENGTH_SHORT);
-			//toast.show();
 			break;
 			
 		case R.id.setMisriButton: 
@@ -300,11 +260,8 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 
 		case R.id.todayButton:
 			c = Calendar.getInstance();
-			//setMisriText(todayDay, todayMonth, todayYear);
-			//setGregorianText(todayDay, todayMonth, todayYear);
 			setGregorianText(c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.MONTH), c.get(Calendar.YEAR));
 			setMisriText(c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.MONTH), c.get(Calendar.YEAR));
-			//c.set(todayYear, todayMonth, todayDay);
 			highLightDay(c);
 		}
 	}
@@ -331,8 +288,8 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 				//call the method to convert from Gregorian to Misri
 				setMisriText(dayOfMonth, monthOfYear, year);
 			}
-			else{//V1.02 limit dates to be from 1900 and 2077
-				Toast toast = Toast.makeText(getApplicationContext(), "1900 < YEAR < 2077" , Toast.LENGTH_LONG);
+			else{
+				Toast toast = Toast.makeText(getApplicationContext(), "1900 < YEAR < 2077", Toast.LENGTH_LONG);
 				toast.show();
 			}
 		}
@@ -359,7 +316,7 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 		}
 		return returnDialog;
 	}
-	//Menu processing methods
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu){
 		super.onCreateOptionsMenu(menu);
@@ -397,81 +354,75 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 		return false;
 	}
 
-	//Rotation and sensor methods
-
 	private void makeRotation(ImageView image, boolean defaultNorth){
 		float[] R = new float[16];
 		float[] I = new float[16];
 		float[] remappedMatrix = new float[16];
 		float[] actual_orientation = new float[3];
-	try{
-		SensorManager.getRotationMatrix(R, I, accelerometerValues, magneticValues);
-		display = getWindowManager().getDefaultDisplay();
-		int phoneRotation = display.getOrientation();
+		try{
+			SensorManager.getRotationMatrix(R, I, accelerometerValues, magneticValues);
+			display = getWindowManager().getDefaultDisplay();
+			@SuppressWarnings("deprecation")
+			int phoneRotation = display.getOrientation();
 
-		if(phoneRotation==0){//portrait
-			SensorManager.remapCoordinateSystem(R, SensorManager.AXIS_X, SensorManager.AXIS_Y, remappedMatrix);
-		}
-		if(phoneRotation==1){//landscape facing left
-			SensorManager.remapCoordinateSystem(R, SensorManager.AXIS_Y, SensorManager.AXIS_MINUS_X, remappedMatrix);
-		}
-		if(phoneRotation==3){//landscape facing right
-			SensorManager.remapCoordinateSystem(R, SensorManager.AXIS_MINUS_Y, SensorManager.AXIS_X, remappedMatrix);
-		}
+			if(phoneRotation==0){//portrait
+				SensorManager.remapCoordinateSystem(R, SensorManager.AXIS_X, SensorManager.AXIS_Y, remappedMatrix);
+			}
+			if(phoneRotation==1){//landscape facing left
+				SensorManager.remapCoordinateSystem(R, SensorManager.AXIS_Y, SensorManager.AXIS_MINUS_X, remappedMatrix);
+			}
+			if(phoneRotation==3){//landscape facing right
+				SensorManager.remapCoordinateSystem(R, SensorManager.AXIS_MINUS_Y, SensorManager.AXIS_X, remappedMatrix);
+			}
 
-		SensorManager.getOrientation(remappedMatrix, actual_orientation);
-		//values[0]: Azimuth, rotation around the Z axis (0<=azimuth<360). 0 = North, 90 = East, 180 = South, 270 = West
-		float azi = (float)Math.toDegrees(actual_orientation[0]);
+			SensorManager.getOrientation(remappedMatrix, actual_orientation);
+			//values[0]: Azimuth, rotation around the Z axis (0<=azimuth<360). 0 = North, 90 = East, 180 = South, 270 = West
+			float azi = (float)Math.toDegrees(actual_orientation[0]);
 
-		if(declination>=0){
-			azi-=declination;//positive declination means the magnetic field is rotated east that much from true north. if its positive subtract it, negative then add it
-		}
-		else azi+=declination;//need to do an azimuth conversion.
-		int aziDisplay = (int)azi;//for display purposes
-		if(aziDisplay<0){
-			aziDisplay = 180 + (180 + aziDisplay);
-		}
+			if(declination>=0){
+				azi-=declination;//positive declination means the magnetic field is rotated east that much from true north. if its positive subtract it, negative then add it
+			}
+			else azi+=declination;//need to do an azimuth conversion.
+			int aziDisplay = (int)azi;//for display purposes
+			if(aziDisplay<0){
+				aziDisplay = 180 + (180 + aziDisplay);
+			}
 
-		bearingField.setText(Integer.toString(aziDisplay));
-		endRotateNorth = -azi;//this is endRotate is north 
-		if(image.equals(arrowImageNorth)){
-			if(defaultNorth) endRotateNorth=0;
-			RotateAnimation rotateAnimation = new RotateAnimation(startRotateNorth, endRotateNorth, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-			rotateAnimation.setDuration((long) 500);
-			rotateAnimation.setFillAfter(true);
-			image.startAnimation(rotateAnimation);
-			startRotateNorth=endRotateNorth;
+			endRotateNorth = -azi;//this is endRotate is north 
+			if(image.equals(arrowImageNorth)){
+				if(defaultNorth) endRotateNorth=0;
+				RotateAnimation rotateAnimation = new RotateAnimation(startRotateNorth, endRotateNorth, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+				rotateAnimation.setDuration((long) 500);
+				rotateAnimation.setFillAfter(true);
+				image.startAnimation(rotateAnimation);
+				startRotateNorth=endRotateNorth;
+			}
+			if(image.equals(arrowImageMecca)){
+				if(location!=null){
+					endRotateMecca = endRotateNorth + location.bearingTo(mecca);}
+				if(defaultNorth || bearingToMeccaString.equals("Unavailable")) endRotateMecca=0;
+				RotateAnimation rotateAnimation = new RotateAnimation(startRotateMecca, endRotateMecca, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+				rotateAnimation.setDuration((long) 500);
+				rotateAnimation.setFillAfter(true);
+				image.startAnimation(rotateAnimation);
+				startRotateMecca=endRotateMecca;
+			}
+		}catch(Exception e){
+          //do something
 		}
-		if(image.equals(arrowImageMecca)){
-			if(location!=null){
-				endRotateMecca = endRotateNorth + location.bearingTo(mecca);}
-			if(defaultNorth || bearingToMeccaString.equals("Unavailable")) endRotateMecca=0;
-			RotateAnimation rotateAnimation = new RotateAnimation(startRotateMecca, endRotateMecca, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-			rotateAnimation.setDuration((long) 500);
-			rotateAnimation.setFillAfter(true);
-			image.startAnimation(rotateAnimation);
-			startRotateMecca=endRotateMecca;
-		}
-	}catch(NullPointerException e){
-		
-	}
-	
 	}
 
 	@Override
 	protected void onPause(){
 		super.onPause();
-		//disable sensors
 		sensorManager.unregisterListener(this, accelerometerSensor);
 		sensorManager.unregisterListener(this, magneticSensor);
-		//stop receiving location updates
 		locMgr.removeUpdates(this);
 	}
 
 	@Override
 	protected void onStop(){
 		super.onStop();
-
 	}
 
 
@@ -483,7 +434,9 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 					Double.valueOf(location.getAltitude()).floatValue(),
 					System.currentTimeMillis());
 			declination = geoField.getDeclination();//positive means the magnetic field is rotated east that much from true north
-		}catch(NullPointerException npe){}
+		}catch(Exception e){
+				//do something
+			}
 	}
 
 	public void onSensorChanged(SensorEvent event){
@@ -496,7 +449,6 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 			break;
 			case(Sensor.TYPE_MAGNETIC_FIELD):
 				magneticValues = event.values.clone();
-			//	accuracyString = event.accuracy;
 			break;
 			}
 			if(bearingOptions == BearingOptions.ALWAYS_ON && magneticValues!=null && accelerometerValues!=null){				

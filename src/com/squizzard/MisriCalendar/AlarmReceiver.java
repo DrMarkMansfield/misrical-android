@@ -12,6 +12,7 @@ public class AlarmReceiver extends BroadcastReceiver{
 	private int icon = R.drawable.ic_launcher1;
 	private Misri m  = new Misri();
 		
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		String mAction = intent.getAction();

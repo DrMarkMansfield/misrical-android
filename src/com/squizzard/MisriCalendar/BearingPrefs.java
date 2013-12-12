@@ -25,6 +25,7 @@ public class BearingPrefs extends PreferenceActivity implements OnClickListener 
 	private int icon = R.drawable.ic_launcher1;
 	private Preference alertPreference;
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -74,6 +75,7 @@ public class BearingPrefs extends PreferenceActivity implements OnClickListener 
 		return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(context.getString(R.string.miqaat_alert_preference), false);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onClick(View v) {
 		switch(v.getId()){

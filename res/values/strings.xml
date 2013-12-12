@@ -19,7 +19,7 @@
     <string name="settings_title">Settings</string>
     <string name="miqaat_title">Miqaat</string>  
     <string name="about_title">MisriCal from OUIKKA</string> 
-    <string name="copyright_string">"Copyright \u00A9 2012 Ouikka Enterprises"</string>
+    <string name="copyright_string">"Copyright \u00A9 2013 Ouikka Enterprises"</string>
     <string name="bearing_number_label">Bearing:</string>
     <string name="bearing_updates_off">Updates: Off</string>
     <string name="bearing_updates_auto">Updates: Auto</string>

@@ -2,97 +2,96 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical">
+    android:orientation="vertical" >
 
     <LinearLayout
         android:id="@+id/row1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-       android:orientation="horizontal">
+        android:orientation="horizontal" >
 
-            <Button
-                android:id="@+id/setGregorianButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/set_gregorian_label"
-                android:layout_weight="2"/>
-            
-            <Button
-                android:id="@+id/setMisriButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/set_misri_label"
-                android:layout_weight="2"/>
-            
-        </LinearLayout>
+        <Button
+            android:id="@+id/setGregorianButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="@string/set_gregorian_label" />
 
-       <LinearLayout
+        <Button
+            android:id="@+id/setMisriButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="@string/set_misri_label" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/row2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-       android:orientation="horizontal">
+        android:orientation="horizontal" >
 
-            <Button
-                android:id="@+id/dayMinusButton"
-                android:layout_width="100dip"
-                android:layout_height="wrap_content"
-                android:text="@string/DayMinus"
-                android:layout_weight="3"/>
+        <Button
+            android:id="@+id/dayMinusButton"
+            android:layout_width="100dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="@string/DayMinus" />
 
-            <Button
-                android:id="@+id/todayButton"
-                android:layout_width="100dip"
-                android:layout_height="wrap_content"
-                android:text="@string/Today"
-                android:layout_weight="3"/>
+        <Button
+            android:id="@+id/todayButton"
+            android:layout_width="100dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="@string/Today" />
 
-            <Button
-                android:id="@+id/dayPlusButton"
-                android:layout_width="100dip"
-                android:layout_height="wrap_content"
-                android:text="@string/DayPlus"
-                android:layout_weight="3"/>
-       </LinearLayout>
+        <Button
+            android:id="@+id/dayPlusButton"
+            android:layout_width="100dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="@string/DayPlus" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal" >
 
         <Button
             android:id="@+id/sunButton"
             style="@style/notTodayButton"
-            android:text="@string/Su"/>
+            android:text="@string/Su" />
 
         <Button
             android:id="@+id/monButton"
             style="@style/notTodayButton"
-            android:text="@string/Mo"/>
+            android:text="@string/Mo" />
 
         <Button
             android:id="@+id/tueButton"
             style="@style/notTodayButton"
-            android:text="@string/Tu"/>
+            android:text="@string/Tu" />
 
         <Button
             android:id="@+id/wedButton"
             style="@style/notTodayButton"
-            android:text="@string/We"/>
+            android:text="@string/We" />
 
         <Button
             android:id="@+id/thuButton"
             style="@style/notTodayButton"
-            android:text="@string/Th"/>
+            android:text="@string/Th" />
 
         <Button
             android:id="@+id/friButton"
             style="@style/notTodayButton"
-            android:text="@string/Fr"/>
+            android:text="@string/Fr" />
 
         <Button
             android:id="@+id/satButton"
             style="@style/notTodayButton"
-            android:text="@string/Sa"/>
+            android:text="@string/Sa" />
     </LinearLayout>
 
     <TextView
@@ -101,7 +100,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="5dip"
-        android:textSize="16sp"/>
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/dateGregorian"
@@ -109,7 +108,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding=" 5dip"
-        android:textSize="16sp"/>
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/eventText"
@@ -118,13 +117,13 @@
         android:gravity="center"
         android:padding="5dip"
         android:textColor="@color/monthListNumber"
-        android:textSize="14sp"/>
+        android:textSize="14sp" />
 
     <TableLayout
         android:id="@+id/arrowsLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:stretchColumns="1">
+        android:stretchColumns="1" >
 
         <TableRow>
 
@@ -136,7 +135,7 @@
                 android:adjustViewBounds="true"
                 android:padding="5dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/arr2"/>
+                android:src="@drawable/arr2" />
 
             <ImageView
                 android:id="@+id/arrow_icon_mecca"
@@ -147,7 +146,7 @@
                 android:adjustViewBounds="true"
                 android:padding="5dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/arr2"/>
+                android:src="@drawable/arr2" />
         </TableRow>
 
         <TableRow>
@@ -161,65 +160,19 @@
                 android:padding="5dip"
                 android:text="@string/north"
                 android:textSize="12sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/meccaLabel"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:padding="5dip"
                 android:text="@string/mecca"
                 android:textSize="12sp"
-                android:textStyle="bold"
-                android:layout_weight="2"/>
-
+                android:textStyle="bold" />
         </TableRow>
     </TableLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="bottom"
-        android:orientation="horizontal">
-
-        <TableLayout
-            android:id="@+id/arrowsTextLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:stretchColumns="1">
-
-            <TableRow>
-
-                <TextView
-                    android:id="@+id/bearingMode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:padding="5dip"
-                    android:text="@string/auto"
-                    android:textSize="14sp"/>
-
-                <TextView
-                    android:id="@+id/bearing_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5dip"
-                    android:gravity="right"
-                    android:padding="1dip"
-                    android:text="@string/bearing_number_label"
-                    android:textSize="14sp"/>
-
-                <TextView
-                    android:id="@+id/bearing"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:minWidth="7dip"
-                    android:padding="1dip"
-                    android:textSize="14sp"/>
-            </TableRow>
-        </TableLayout>
-    </LinearLayout>
 
 </LinearLayout>
