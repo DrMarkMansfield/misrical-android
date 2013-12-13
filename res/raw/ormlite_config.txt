@@ -1,0 +1,23 @@
+#
+# generated on 2013/12/13 06:41:15
+#
+# --table-start--
+dataClass=com.squizzard.Database.Reminder
+tableName=reminders
+# --table-fields-start--
+# --field-start--
+fieldName=id
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=reminderText
+# --field-end--
+# --field-start--
+fieldName=day
+# --field-end--
+# --field-start--
+fieldName=month
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################

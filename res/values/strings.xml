@@ -8,6 +8,7 @@
     <string name="set_misri_label">Set Misri</string>
     <string name="about_opt_label">About</string>
     <string name="share_opt_label">Share</string>
+    <string name="reminder_label">My Reminders</string>
     <string name="exit_opt_label">Exit</string>
     <string name="miqaat_opt_label">Miqaat</string>
     <string name="bearings_always_pref">Automatic Bearing Updates </string>
@@ -53,5 +54,11 @@
     <string name="tips">In order for the Mecca pointer to function correctly location data is required. This can be sourced from your network provider, WIFI or GPS. It may be necessary to enable the use of wireless networks in your location settings to use your network provider.</string>
     <string name="tips2">If your accelerometer is not calibrated correctly then the pointers will not be correct. If the North pointer does not point where you expect then it may be necessary to recalibrate your device by holding it parallel to the ground and moving it in a figure-8.</string>
              
+    <string name="reminder_button_title">Add New Reminder</string>
+    <string name="reminder_text_label">Enter Reminder Text</string>
+    <string name="reminder_set_misri">Set Date as Misri</string>
+    <string name="reminder_set_gregorian">Set Date as Gregorian</string>
+    
+     <string name="word_save">Save</string>
     
 </resources>

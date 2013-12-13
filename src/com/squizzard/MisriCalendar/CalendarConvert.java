@@ -2,6 +2,8 @@ package com.squizzard.MisriCalendar;
 
 import java.util.Calendar;
 import com.squizzard.MisriCalendar.BearingPrefs.BearingOptions;
+import com.squizzard.Reminder.ReminderList;
+
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -302,6 +304,7 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 		}
 
 	};
+	
 	protected Dialog onCreateDialog(int id){
 		switch(id){
 		case DATE_DIALOG_ID:
@@ -311,19 +314,21 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 		case MISRI_DIALOG_ID:
 			returnDialog = new MisriDialog(this, dateConverter);
 			returnDialog.setOnDismissListener(new DialogInterface.OnDismissListener(){
-		        @Override
-		        public void onDismiss(DialogInterface dialog) {
-		        	c.set(Calendar.DAY_OF_MONTH, dateConverter.getConvertedGregorianDay());
-					c.set(Calendar.MONTH, dateConverter.getConvertedGregorianMonth());
-					c.set(Calendar.YEAR, dateConverter.getConvertedGregorianYear());
+				@Override
+				public void onDismiss(DialogInterface dialog) {
+					if(dateConverter.getConvertedGregorianDay() != 0 && dateConverter.getConvertedGregorianMonth() != 0 && dateConverter.getConvertedGregorianYear() != 0){
+						c.set(Calendar.DAY_OF_MONTH, dateConverter.getConvertedGregorianDay());
+						c.set(Calendar.MONTH, dateConverter.getConvertedGregorianMonth());
+						c.set(Calendar.YEAR, dateConverter.getConvertedGregorianYear());
+					}
 					highLightDay(c);
-		        }
-		        });
+				}
+			});
 			break;
 		}
 		return returnDialog;
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu){
 		super.onCreateOptionsMenu(menu);
@@ -355,6 +360,9 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 			intent.putExtra(android.content.Intent.EXTRA_TEXT, "Android app for converting between Misri and Gregorian dates: \nhttps://market.android.com/details?id=com.squizzard.MisriCalendar");
 			intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "MisriCal - calendar conversion for Andorid");
 			startActivity(Intent.createChooser(intent, "Share via"));
+		case R.id.reminders:
+			Intent reminderIntent = new Intent(this, ReminderList.class);
+			startActivity(reminderIntent);
 		default: 
 		}
 		return false;
