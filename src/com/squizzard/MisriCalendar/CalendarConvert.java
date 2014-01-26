@@ -3,6 +3,7 @@ package com.squizzard.MisriCalendar;
 import java.util.Calendar;
 import com.squizzard.MisriCalendar.BearingPrefs.BearingOptions;
 import com.squizzard.Reminder.ReminderList;
+import com.squizzard.util.DateUtil;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -196,7 +197,8 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 		super.onResume();
 		location=null;
 		bearingToMeccaString="";
-
+		//TODO put this back in
+/**/
 		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE); 
 		sensorManager.registerListener(this, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
 		sensorManager.registerListener(this, magneticSensor, SensorManager.SENSOR_DELAY_NORMAL);
@@ -239,7 +241,7 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 			toast.show();
 			LightingColorFilter lcf = new LightingColorFilter( 0x44555555, 0); 
 			arrowImageMecca.setColorFilter(lcf);
-		}
+		}/**/
 	}
 
 	@SuppressWarnings("deprecation")
@@ -276,25 +278,24 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 	}
 
 	private void setMisriText(int dayOfMonth, int monthOfYear, int year) {
-		misriText.setText(dateConverter.getMisriDate(year, monthOfYear, dayOfMonth));
+		int[] dateArray = dateConverter.getMisriDate(dayOfMonth, monthOfYear, year);
+		misriText.setText(DateUtil.getMisriDateString(dateArray[0], dateArray[1], dateArray[2]));
 		eventText.setText(dateConverter.getTodayEvent());
 	}
 
 	private void setGregorianText(int dayOfMonth, int monthOfYear, int year){
-		gregorianText.setText(dateConverter.convertGregorian(dayOfMonth, monthOfYear, year));//convertGregorian has jan at 0
+		gregorianText.setText(DateUtil.getGregorianDateString(dayOfMonth, monthOfYear, year));
 		eventText.setText(dateConverter.getTodayEvent());
 	}
 
-	private DatePickerDialog.OnDateSetListener mDateSetListener = 
-		new DatePickerDialog.OnDateSetListener(){
+	private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener(){
 		public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-			if((year>1900) && (year<2077)){//V1.02 limit dates to be from 1900 and 2077
+			if((year>1900) && (year<2077)){
 				c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 				c.set(Calendar.MONTH, monthOfYear);
 				c.set(Calendar.YEAR, year);
 				highLightDay(c);
 				setGregorianText(dayOfMonth, monthOfYear, year);
-				//call the method to convert from Gregorian to Misri
 				setMisriText(dayOfMonth, monthOfYear, year);
 			}
 			else{
@@ -333,36 +334,36 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 	public boolean onCreateOptionsMenu(Menu menu){
 		super.onCreateOptionsMenu(menu);
 		MenuInflater menuInflater = getMenuInflater();
-		menuInflater.inflate(R.menu.menu, menu);
+		menuInflater.inflate(R.menu.menu_home, menu);
 		return true;
 	}
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item){
 		switch(item.getItemId()){
-		case R.id.quit:
-			finish();
-			return true;
 		case R.id.miqaat: 
 			startActivity(new Intent(this, Miqaat.class));
-			return true;
+			break;
 		case R.id.about:
 			startActivity(new Intent(this, About.class));
-			return true;
+			break;
 		case R.id.bearings:
 			Intent bearingOptionIntent = new Intent(this, BearingPrefs.class);
 			bearingOptionIntent.putExtra("PROVIDER", providerString);
 			bearingOptionIntent.putExtra("BEARING_TO_MECCA", bearingToMeccaString);
 			startActivity(bearingOptionIntent);
-			return true;
+			break;
 		case R.id.share:
 			Intent intent = new Intent(android.content.Intent.ACTION_SEND);
 			intent.setType("text/*");
 			intent.putExtra(android.content.Intent.EXTRA_TEXT, "Android app for converting between Misri and Gregorian dates: \nhttps://market.android.com/details?id=com.squizzard.MisriCalendar");
 			intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "MisriCal - calendar conversion for Andorid");
 			startActivity(Intent.createChooser(intent, "Share via"));
+			break;
 		case R.id.reminders:
 			Intent reminderIntent = new Intent(this, ReminderList.class);
 			startActivity(reminderIntent);
+			break;
 		default: 
 		}
 		return false;

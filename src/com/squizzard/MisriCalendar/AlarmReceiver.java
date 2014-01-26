@@ -1,5 +1,7 @@
 package com.squizzard.MisriCalendar;
 
+import com.squizzard.util.DateUtil;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -20,9 +22,9 @@ public class AlarmReceiver extends BroadcastReceiver{
 		int todayNumber = m.getMisriOrdinal();
 		
 		if(mAction.equals(Attributes.MORNING_CHECK_MIQAAT_INTENT)){//check for today
-			if(Misri.priorityEventMap.containsKey(todayNumber)){
+			if(DateUtil.priorityEventMap.containsKey(todayNumber)){
 		    long now = System.currentTimeMillis();
-		    String contentTitle[] =  Misri.priorityEventMap.get(todayNumber);
+		    String contentTitle[] =  DateUtil.priorityEventMap.get(todayNumber);
 		    notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 			Intent notificationIntent = new Intent(Attributes.NOTIFICATION_INTENT);
 			PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
@@ -33,9 +35,9 @@ public class AlarmReceiver extends BroadcastReceiver{
 			}	
 		}
 		else if(mAction.equals(Attributes.EVENING_CHECK_MIQAAT_INTENT)){//check for tomorrow
-			if(Misri.priorityEventMap.containsKey(todayNumber+1)){
+			if(DateUtil.priorityEventMap.containsKey(todayNumber+1)){
 			    long now = System.currentTimeMillis();
-			    String contentTitle[] =  Misri.priorityEventMap.get(todayNumber+1);
+			    String contentTitle[] =  DateUtil.priorityEventMap.get(todayNumber+1);
 			    notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 				Intent notificationIntent = new Intent(Attributes.NOTIFICATION_INTENT);
 				PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);

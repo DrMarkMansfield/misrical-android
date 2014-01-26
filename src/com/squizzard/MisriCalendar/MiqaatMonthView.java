@@ -3,6 +3,8 @@ package com.squizzard.MisriCalendar;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.squizzard.util.DateUtil;
+
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.widget.SimpleAdapter;
@@ -30,8 +32,8 @@ public class MiqaatMonthView extends ListActivity {
 
 
 		for(int x=eventsStart;x<eventsEnd;x++){
-			if(Misri.priorityEventMap.containsKey(x)){
-				String arr[] = Misri.priorityEventMap.get(x);
+			if(DateUtil.priorityEventMap.containsKey(x)){
+				String arr[] = DateUtil.priorityEventMap.get(x);
 				for(int y=0;y<arr.length;y++){
 					valuesMap = new HashMap<String,String>();
 					valuesMap.put( "date","*" + Integer.toString(x-eventsStart+1));
@@ -39,8 +41,8 @@ public class MiqaatMonthView extends ListActivity {
 					list.add(valuesMap);
 				}
 			}
-			if(Misri.eventMap.containsKey(x)){
-				String arr2[] = Misri.eventMap.get(x);
+			if(DateUtil.eventMap.containsKey(x)){
+				String arr2[] = DateUtil.eventMap.get(x);
 				for(int y=0;y<arr2.length;y++){
 					valuesMap = new HashMap<String,String>();
 					valuesMap.put( "date", Integer.toString(x-eventsStart+1));

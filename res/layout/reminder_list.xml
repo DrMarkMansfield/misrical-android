@@ -3,23 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <Button
-        android:id="@+id/reminder_list_add_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_margin="20dp"
-        android:text="@string/reminder_button_title"
-        android:background="@drawable/green_button_selector" />
-
     <ListView
-        android:id="@+id/listView1"
+        android:id="@+id/reminder_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-		android:layout_below="@id/reminder_list_add_button">
+        android:focusable="false"
+        android:layout_height="wrap_content">
     </ListView>
-
-
-
 </RelativeLayout>

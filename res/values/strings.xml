@@ -56,9 +56,21 @@
              
     <string name="reminder_button_title">Add New Reminder</string>
     <string name="reminder_text_label">Enter Reminder Text</string>
-    <string name="reminder_set_misri">Set Date as Misri</string>
-    <string name="reminder_set_gregorian">Set Date as Gregorian</string>
+    <string name="reminder_add_text_empty">Reminder Text Required</string>
+    <string name="reminder_add_incomplete_title">Set the date</string>
+    <string name="reminder_add_fix_misri">Fix date as Misri</string>
+    <string name="reminder_add_fix_gregorian">Fix date as Gregorian</string>
+    <string name="reminder_add_fix_explanation">If the reminder is fixed to one calendar then the reminder will always be tied to that calendar in future years, meaning the date on the other calendar can vary.</string>
+    <string name="reminder_add_incomplete_message">Reminder cannot be saved without a date</string>
     
-     <string name="word_save">Save</string>
+    <string name="reminder_delete_confirm">Do you want to delete this reminder?</string>
+    
+    <string name="word_save">Save</string>
+    <string name="word_ok">OK</string>
+    <string name="word_add">Add</string>
+    <string name="word_save">Save</string>
+    <string name="word_delete">Delete</string>
+    <string name="word_edit">Edit</string>
+    <string name="word_cancel">Cancel</string>
     
 </resources>

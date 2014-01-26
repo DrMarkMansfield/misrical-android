@@ -9,8 +9,26 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="28dp"
-        android:layout_marginTop="29dp"
-        android:text="TextView" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/reminder_item_misri_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/reminder_item_text"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/reminder_item_gregorian_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/reminder_item_misri_text"
+        android:layout_alignBottom="@+id/reminder_item_misri_text"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

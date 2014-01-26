@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.squizzard.MisriCalendar" android:versionCode="8"
-	android:versionName="@string/app_version">
+	android:versionName="1.31">
 	<uses-sdk android:minSdkVersion="7" android:targetSdkVersion="19"/>
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -19,18 +19,13 @@
 				<category android:name="android.intent.category.MONKEY" />
 			</intent-filter>
 		</activity>
-		<activity android:name=".BearingPrefs" android:label="@string/settings_title"
-			android:noHistory="true" />
-		<activity android:name=".About" android:label="@string/about_title"
-			android:noHistory="true" />
-		<activity android:name=".Miqaat" android:label="@string/miqaat_title" 
-			android:noHistory="false" />
-		<activity android:name="com.squizzard.Reminder.ReminderList" 
-			android:noHistory="false" />
-		<activity android:name="com.squizzard.Reminder.ReminderAdd"
-			android:noHistory="false" />
-		<activity android:name=".MiqaatMonthView" android:label=""
-			android:noHistory="true" 
+		<activity android:name=".BearingPrefs" android:label="@string/settings_title" android:noHistory="true" />
+		<activity android:name=".About" android:label="@string/about_title" android:noHistory="true" />
+		<activity android:name=".Miqaat" android:label="@string/miqaat_title" android:noHistory="false" />
+		<activity android:name="com.squizzard.Reminder.ReminderList" android:theme="@style/Theme.AppCompat" android:noHistory="false" />
+		<activity android:name="com.squizzard.Reminder.ReminderAdd" android:noHistory="false" android:theme="@style/Theme.AppCompat"/>
+		<activity android:name="com.squizzard.Reminder.ReminderDisplay" android:noHistory="false" android:theme="@style/Theme.AppCompat"/>
+		<activity android:name=".MiqaatMonthView" android:label="" android:noHistory="true" 
 			android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"/>
 		<receiver android:name=".AlarmCoordinator">
           <intent-filter>

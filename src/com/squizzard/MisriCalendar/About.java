@@ -24,6 +24,7 @@ public class About extends Activity implements OnClickListener{
 	//	webButton.setOnClickListener(this);
 	}
 
+	@SuppressWarnings("deprecation")
 	public void onClick(View v) {
 		switch(v.getId()){
 		case R.id.emailButton:

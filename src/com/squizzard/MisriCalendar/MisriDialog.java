@@ -1,5 +1,7 @@
 package com.squizzard.MisriCalendar;
 
+import com.squizzard.util.DateUtil;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.widget.Button;
@@ -23,7 +25,6 @@ public class MisriDialog extends Dialog implements OnClickListener{
 	private Button yearMinusButton;
 	private Button yearPlusButton;
 	private Button setButton;
-	private Button cancelButton;
 	Misri misriConverter;
 	private static final int MIN_DAY = 1;
 
@@ -47,18 +48,16 @@ public class MisriDialog extends Dialog implements OnClickListener{
 		yearPlusButton.setOnClickListener(this);
 		setButton = (Button)findViewById(R.id.misriSet);
 		setButton.setOnClickListener(this);
-		cancelButton = (Button)findViewById(R.id.misriCancel);
-		cancelButton.setOnClickListener(this);
 		
 		dayText = (EditText)findViewById(R.id.dayText);
 		monthText = (EditText)findViewById(R.id.monthText);
 		yearText = (EditText)findViewById(R.id.yearText);
 		//get todays gregorian date and convert it to the 
-		dayCode = new Integer(m.getTodayMisriDay());
+		dayCode = Integer.valueOf(m.getTodayMisriDay());
 		dayText.setText(dayCode.toString().trim());
 		monthText.setText(m.getTodayMisriMonth().trim());
 		monthCode = m.getTodayMisriMonthCode();
-		yearCode = new Integer(m.getTodayMisriYear());
+		yearCode = Integer.valueOf(m.getTodayMisriYear());
 		yearText.setText(yearCode.toString().trim());
 		
 	}
@@ -76,11 +75,11 @@ public class MisriDialog extends Dialog implements OnClickListener{
 			break;
 		case R.id.monthMinus:
 			subtractMonth();			
-			monthText.setText(misriConverter.getMisriMonth(monthCode).trim());
+			monthText.setText(DateUtil.getMisriMonth(monthCode).trim());
 			break;
 		case R.id.monthPlus:
 			addMonth();
-			monthText.setText(misriConverter.getMisriMonth(monthCode).trim());
+			monthText.setText(DateUtil.getMisriMonth(monthCode).trim());
 			break;
 		case R.id.yearMinus:
 			subtractYear();
@@ -93,9 +92,6 @@ public class MisriDialog extends Dialog implements OnClickListener{
 		case R.id.misriSet:
 			validate();
 			setDate();
-			break;
-		case R.id.misriCancel:
-			this.dismiss();
 			break;
 		}
 		
@@ -137,12 +133,13 @@ public class MisriDialog extends Dialog implements OnClickListener{
 	}
 	
 	private void setDate(){
-		String gregorianDate = misriConverter.getGregorianDate(yearCode, monthCode-1, dayCode);
-		String misriDate = misriConverter.convertMisri(dayCode, monthCode, yearCode);
-		CalendarConvert.misriText.setText(misriDate);
+		int[] gregorianDateArray =  misriConverter.getGregorianDate(dayCode, monthCode-1, yearCode);
+		//int[] misriDateArray = misriConverter.getMisriDate(dayCode, monthCode-1, yearCode);
+		//CalendarConvert.misriText.setText(DateUtil.getMisriDateString(misriDateArray[0], misriDateArray[1], misriDateArray[2]));
+		CalendarConvert.misriText.setText(DateUtil.getMisriDateString(dayCode, monthCode, yearCode));
 		misriConverter.setEvent(monthCode, dayCode);
 		CalendarConvert.eventText.setText(misriConverter.getTodayEvent());
-		CalendarConvert.gregorianText.setText(gregorianDate);
+		CalendarConvert.gregorianText.setText(DateUtil.getGregorianDateString(gregorianDateArray[0], gregorianDateArray[1], gregorianDateArray[2]));
 		this.dismiss();
 	}
 

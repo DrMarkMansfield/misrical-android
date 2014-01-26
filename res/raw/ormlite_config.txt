@@ -1,8 +1,8 @@
 #
-# generated on 2013/12/13 06:41:15
+# generated on 2013/12/24 11:31:38
 #
 # --table-start--
-dataClass=com.squizzard.Database.Reminder
+dataClass=com.squizzard.Reminder.Reminder
 tableName=reminders
 # --table-fields-start--
 # --field-start--
@@ -13,10 +13,28 @@ generatedId=true
 fieldName=reminderText
 # --field-end--
 # --field-start--
-fieldName=day
+fieldName=gregorianDay
 # --field-end--
 # --field-start--
-fieldName=month
+fieldName=gregorianMonth
+# --field-end--
+# --field-start--
+fieldName=misriDay
+# --field-end--
+# --field-start--
+fieldName=misriMonth
+# --field-end--
+# --field-start--
+fieldName=hour
+# --field-end--
+# --field-start--
+fieldName=minute
+# --field-end--
+# --field-start--
+fieldName=type
+# --field-end--
+# --field-start--
+fieldName=active
 # --field-end--
 # --table-fields-end--
 # --table-end--

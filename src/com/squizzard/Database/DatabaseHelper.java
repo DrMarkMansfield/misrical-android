@@ -14,11 +14,12 @@ import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.squizzard.MisriCalendar.R;
+import com.squizzard.Reminder.Reminder;
 
 	
 	public class DatabaseHelper extends OrmLiteSqliteOpenHelper{
 		
-		private static final String DATABASE_NAME = "redbull.db";
+		private static final String DATABASE_NAME = "misrical.db";
 		private static final int DATABASE_VERSION = 1;
 		
 		private RuntimeExceptionDao<Reminder, Integer> reminderRuntimeDao = null;
@@ -48,8 +49,17 @@ import com.squizzard.MisriCalendar.R;
 			return reminderRuntimeDao;
 		}
 		
-		public ArrayList<Reminder> getReminders(long id){
-			ArrayList<Reminder> reminders = (ArrayList<Reminder>) getReminderDao().queryForEq("id", id);
+		public Reminder getReminder(long id){
+			ArrayList<Reminder> reminder = (ArrayList<Reminder>) getReminderDao().queryForEq("id", id);
+			if(reminder.size()==1){
+				return reminder.get(0);
+			}else{
+				return null;
+			}
+		}
+		
+		public ArrayList<Reminder> getReminders(){
+			ArrayList<Reminder> reminders = (ArrayList<Reminder>) getReminderDao().queryForAll();
 			return reminders;
 		}
 		
@@ -66,10 +76,14 @@ import com.squizzard.MisriCalendar.R;
 		}
 		
 		public boolean saveReminders(ArrayList<Reminder> reminders){
-			for(Reminder rem: reminders){
-				getReminderDao().create(rem);
+			for(Reminder reminder: reminders){
+				saveReminder(reminder);
 			}
 			return true;
+		}
+		
+		public void saveReminder(Reminder reminder){
+			getReminderDao().createOrUpdate(reminder);
 		}
 		
 		@Override
