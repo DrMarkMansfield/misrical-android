@@ -18,6 +18,11 @@
     <string name="bearings_off_pref">Bearings Disabled</string>
     <string name="bearings_off_summary">Save some battery</string>
     <string name="settings_title">Settings</string>
+    <string name="settings_check_today">Check Today\'s Events</string>
+    <string name="settings_check_tomorrow">Check Tomorrow\'s Events</string>
+    <string name="settings_bearing_due_north">Mecca bearing from due north: </string>
+    <string name="settings_provider">Provider: </string>
+    
     <string name="miqaat_title">Miqaat</string>  
     <string name="about_title">MisriCal from OUIKKA</string> 
     <string name="copyright_string">"Copyright \u00A9 2013 Ouikka Enterprises"</string>
@@ -72,5 +77,6 @@
     <string name="word_delete">Delete</string>
     <string name="word_edit">Edit</string>
     <string name="word_cancel">Cancel</string>
+    <string name="word_menu">Menu</string>
     
 </resources>

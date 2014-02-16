@@ -29,6 +29,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -44,7 +45,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class CalendarConvert extends Activity implements OnClickListener, SensorEventListener, LocationListener{//make the location listener into an inner class
+public class CalendarConvert extends ActionBarActivity implements OnClickListener, SensorEventListener, LocationListener{//make the location listener into an inner class
 
 	private static final int DATE_DIALOG_ID = 0;
 	private static final int MISRI_DIALOG_ID = 1;
@@ -198,7 +199,7 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 		location=null;
 		bearingToMeccaString="";
 		//TODO put this back in
-/**/
+/*
 		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE); 
 		sensorManager.registerListener(this, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
 		sensorManager.registerListener(this, magneticSensor, SensorManager.SENSOR_DELAY_NORMAL);
@@ -241,7 +242,7 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 			toast.show();
 			LightingColorFilter lcf = new LightingColorFilter( 0x44555555, 0); 
 			arrowImageMecca.setColorFilter(lcf);
-		}/**/
+		}*/
 	}
 
 	@SuppressWarnings("deprecation")
@@ -332,7 +333,6 @@ public class CalendarConvert extends Activity implements OnClickListener, Sensor
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu){
-		super.onCreateOptionsMenu(menu);
 		MenuInflater menuInflater = getMenuInflater();
 		menuInflater.inflate(R.menu.menu_home, menu);
 		return true;

@@ -6,26 +6,31 @@
 	<ListView android:id="@android:id/list" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" />
 	
-		<ScrollView
+	<ScrollView
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="0dp"
     android:scrollbars="vertical"
     android:layout_weight="1">
     <LinearLayout
       android:layout_width="fill_parent"
-      android:layout_height="fill_parent"
+      android:layout_height="wrap_content"
       android:orientation="vertical">
 	<Button
-        android:id="@+id/miqaatTestButton"
+        android:id="@+id/miqaatCheckToday"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Test Miqaat Alert"/>
+        android:text="@string/settings_check_today"/>
+		<Button
+        android:id="@+id/miqaatCheckTomorrow"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_check_tomorrow"/>
 	<TableLayout android:id="@+id/tableLayout1"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
 		android:stretchColumns = "*" android:shrinkColumns = "*">
 		<TableRow>
 			<TextView android:padding="5dip" android:layout_height="wrap_content"
-				android:text="Mecca bearing from due north: " android:layout_width="wrap_content"
+				android:text="@string/settings_bearing_due_north" android:layout_width="wrap_content"
 				android:textSize="16sp" />
 			<TextView android:padding="3dip" android:id="@+id/meccaBearing"
 				android:layout_height="wrap_content" android:layout_width="wrap_content"
@@ -33,33 +38,13 @@
 		</TableRow>
 		<TableRow>
 			<TextView android:padding="5dip" android:layout_height="wrap_content"
-				android:text="Provider: " android:layout_width="wrap_content"
+				android:text="@string/settings_provider" android:layout_width="wrap_content"
 				android:textSize="16sp" />
 			<TextView android:padding="5dip" android:id="@+id/provider"
 				android:layout_height="wrap_content" android:layout_width="wrap_content"
 				android:textSize="14sp" />
 		</TableRow>
 		</TableLayout>
-	
-		<TableLayout
-		    android:layout_width="wrap_content" android:layout_height="wrap_content">
-		<TableRow>
-			<TextView android:padding="5dip" android:layout_height="wrap_content"
-				android:text="@string/tips" android:layout_width="wrap_content"
-				android:textSize="14sp" />
-			<TextView android:padding="5dip" android:id="@+id/accuracy"
-				android:layout_height="wrap_content" android:layout_width="wrap_content"
-				android:textSize="14sp" />
-		</TableRow>
-		<TableRow>
-			<TextView android:padding="5dip" android:layout_height="wrap_content"
-				android:text="@string/tips2" android:layout_width="wrap_content"
-				android:textSize="14sp" />
-			<TextView android:padding="5dip" android:id="@+id/accuracy"
-				android:layout_height="wrap_content" android:layout_width="wrap_content"
-				android:textSize="14sp" />
-		</TableRow>
-	</TableLayout>
 	</LinearLayout>
 	</ScrollView>
 </LinearLayout>

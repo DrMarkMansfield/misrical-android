@@ -51,7 +51,7 @@ public class ReminderAdd extends ActionBarActivity implements DatePickerDialog.O
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.reminder_add);
-
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		etReminder = (EditText)findViewById(R.id.reminder_add_title);
 		btnSetMisri = (Button)findViewById(R.id.reminder_add_misri_set);
 		btnSetGregorian = (Button)findViewById(R.id.reminder_add_gregorian_set);
@@ -97,6 +97,9 @@ public class ReminderAdd extends ActionBarActivity implements DatePickerDialog.O
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
+        	case android.R.id.home: 
+        		onBackPressed();
+        		return true;
 	        case R.id.reminder_save:
 	        	if(etReminder.getText().toString().trim().length() <= 0){
 					etReminder.setError(getString(R.string.reminder_add_text_empty));
@@ -135,6 +138,7 @@ public class ReminderAdd extends ActionBarActivity implements DatePickerDialog.O
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
+	    
 	}
 
 	private OnClickListener buttonClickListener = new OnClickListener(){

@@ -2,6 +2,7 @@ package com.squizzard.Database;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import android.content.Context;
 
@@ -11,8 +12,11 @@ import android.util.Log;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.stmt.DeleteBuilder;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+import com.squizzard.MisriCalendar.Misri;
 import com.squizzard.MisriCalendar.R;
 import com.squizzard.Reminder.Reminder;
 
@@ -84,6 +88,52 @@ import com.squizzard.Reminder.Reminder;
 		
 		public void saveReminder(Reminder reminder){
 			getReminderDao().createOrUpdate(reminder);
+		}
+		
+		//Should be in a database service class
+		public ArrayList<Reminder> getReminderEvents(int daysToAdd){
+			ArrayList<Reminder> events = new ArrayList<Reminder>();
+			events = getEventsGregorian(daysToAdd);
+			events.addAll(getEventsMisri(daysToAdd));
+			return events;
+		}
+		
+		private ArrayList<Reminder> getEventsGregorian(int daysToAdd){
+			ArrayList<Reminder> events = new ArrayList<Reminder>();
+			Calendar c = Calendar.getInstance();
+			int day = c.get(Calendar.DAY_OF_MONTH) + daysToAdd;
+			int month = c.get(Calendar.MONTH) + 1;
+			QueryBuilder<Reminder, Integer> queryBuilder = getReminderDao().queryBuilder();
+
+			try {
+				queryBuilder.where().eq("gregorianDay", day).and().eq("gregorianMonth", month).and().eq("type", 'G');
+
+				PreparedQuery<Reminder> preparedQuery = queryBuilder.prepare();
+				events = (ArrayList<Reminder>) getReminderDao().query(preparedQuery);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return events;
+		}
+		
+		private ArrayList<Reminder> getEventsMisri(int daysToAdd){
+			ArrayList<Reminder> events = new ArrayList<Reminder>();
+			Misri misri = new Misri();
+			Calendar c = Calendar.getInstance();
+			int[] dates = misri.getMisriDate(c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.MONTH), c.get(Calendar.YEAR));
+			int day = dates[0];
+			int month = dates[1];
+			QueryBuilder<Reminder, Integer> queryBuilder = getReminderDao().queryBuilder();
+
+			try {
+				queryBuilder.where().eq("misriDay", day).and().eq("misriMonth", month).and().eq("type", 'M');
+
+				PreparedQuery<Reminder> preparedQuery = queryBuilder.prepare();
+				events = (ArrayList<Reminder>) getReminderDao().query(preparedQuery);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return events;
 		}
 		
 		@Override

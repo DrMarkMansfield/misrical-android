@@ -1,8 +1,8 @@
 package com.squizzard.MisriCalendar;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
+import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.squizzard.Database.DatabaseHelper;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,10 +20,10 @@ public class BearingPrefs extends PreferenceActivity implements OnClickListener 
 	public enum BearingOptions{ON_TOUCH, ALWAYS_ON, OFF};
 	private TextView meccaBearingText;
 	private TextView providerText;
-	private Button testButton;
-	private NotificationManager notificationManager;
-	private int icon = R.drawable.ic_launcher1;
+	private Button btnCheckToday;
+	private Button btnCheckTomorrow;
 	private Preference alertPreference;
+	private DatabaseHelper databaseHelper = null;
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -33,8 +33,10 @@ public class BearingPrefs extends PreferenceActivity implements OnClickListener 
 		addPreferencesFromResource(R.xml.settings);
 		providerText = (TextView) findViewById(R.id.provider);
 		meccaBearingText = (TextView) findViewById(R.id.meccaBearing);
-		testButton = (Button)findViewById(R.id.miqaatTestButton);
-		testButton.setOnClickListener(this);
+		btnCheckToday = (Button)findViewById(R.id.miqaatCheckToday);
+		btnCheckToday.setOnClickListener(this);
+		btnCheckTomorrow = (Button)findViewById(R.id.miqaatCheckTomorrow);
+		btnCheckTomorrow.setOnClickListener(this);
 		providerText.setText(getIntent().getStringExtra("PROVIDER"));
 		meccaBearingText.setText(getIntent().getStringExtra("BEARING_TO_MECCA"));
 		alertPreference = getPreferenceManager().findPreference(Attributes.MIQAATS_ALERT_PREFERENCE);
@@ -75,20 +77,24 @@ public class BearingPrefs extends PreferenceActivity implements OnClickListener 
 		return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(context.getString(R.string.miqaat_alert_preference), false);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void onClick(View v) {
 		switch(v.getId()){
-		case R.id.miqaatTestButton:
-			long now = System.currentTimeMillis();
-			Notification notification = new Notification(icon, getString(R.string.test_miqaat_text), now);
-			notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-			Intent testNotificationIntent = new Intent(Attributes.TEST_MIQAAT_INTENT);
-			PendingIntent testPendingIntent = PendingIntent.getActivity(this, 0, testNotificationIntent, 0);
-			notification.setLatestEventInfo(this, getString(R.string.test_miqaat_text), getString(R.string.miqaat_alerts_functioning_correctly), testPendingIntent);
-			notification.flags = Notification.FLAG_AUTO_CANCEL; 
-			notificationManager.notify(Attributes.TEST_NOTIFICATION, notification);
+		case R.id.miqaatCheckToday:
+			Intent morningEventIntent= new Intent(Attributes.MORNING_CHECK_MIQAAT_INTENT);
+			sendBroadcast(morningEventIntent);	
+			break;
+		case R.id.miqaatCheckTomorrow:
+			Intent eveningEventIntent= new Intent(Attributes.EVENING_CHECK_MIQAAT_INTENT);
+			sendBroadcast(eveningEventIntent);
 			break;
 		}
+	}
+	
+	protected DatabaseHelper getHelper() {
+		if (databaseHelper == null) {
+			databaseHelper = OpenHelperManager.getHelper(getApplicationContext(), DatabaseHelper.class);
+		}
+		return databaseHelper;
 	}
 }

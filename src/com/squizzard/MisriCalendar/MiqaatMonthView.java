@@ -1,28 +1,39 @@
 package com.squizzard.MisriCalendar;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
 import com.squizzard.util.DateUtil;
 
-import android.app.ListActivity;
 import android.os.Bundle;
-import android.widget.SimpleAdapter;
+import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
-public class MiqaatMonthView extends ListActivity {
+public class MiqaatMonthView extends ActionBarActivity {
 
-	private ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
-	private TextView monthDisplay;
+
+	private MiqaatListAdapter adapter;
+	private ListView list;
+	private ArrayList<String> events = new ArrayList<String>();
+	private ArrayList<String> dates = new ArrayList<String>();
+	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.miqaat_event_display);
 		int month =  getIntent().getIntExtra("MONTH", 0);
-		monthDisplay = (TextView)findViewById(R.id.monthDisplay);
-		monthDisplay.setText(Miqaat.months[month]);
-		HashMap<String,String> valuesMap;
+		list = (ListView)findViewById(R.id.miqaat_list);
+		adapter = new MiqaatListAdapter();
+		list.setAdapter(adapter);
+		
+		getSupportActionBar().setTitle(Miqaat.months[month]);
+		
 		//determine start and end days for displaying events
 		int eventsStart = 0, eventsEnd = 0;
 		eventsStart=Misri.misri_month[month]+1;
@@ -35,27 +46,56 @@ public class MiqaatMonthView extends ListActivity {
 			if(DateUtil.priorityEventMap.containsKey(x)){
 				String arr[] = DateUtil.priorityEventMap.get(x);
 				for(int y=0;y<arr.length;y++){
-					valuesMap = new HashMap<String,String>();
-					valuesMap.put( "date","*" + Integer.toString(x-eventsStart+1));
-					valuesMap.put( "event", arr[y]);
-					list.add(valuesMap);
+					events.add(arr[y]);
+					dates.add(Integer.toString(x-eventsStart+1)  + DateUtil.getDaySuffix(x-eventsStart+1) + " - Notification Event");
 				}
 			}
 			if(DateUtil.eventMap.containsKey(x)){
 				String arr2[] = DateUtil.eventMap.get(x);
 				for(int y=0;y<arr2.length;y++){
-					valuesMap = new HashMap<String,String>();
-					valuesMap.put( "date", Integer.toString(x-eventsStart+1));
-					valuesMap.put( "event",arr2[y]);
-					list.add(valuesMap);
+					events.add(arr2[y]);
+					dates.add(Integer.toString(x-eventsStart+1) + DateUtil.getDaySuffix(x-eventsStart+1));
 				}
-
 			}			
 		}
-
-		SimpleAdapter adapter = new SimpleAdapter( 
-				this, list, R.layout.miqaat_event_row, new String[] { "event","date" }, new int[] { R.id.event, R.id.date });
-
-		setListAdapter(adapter);
 	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem menuItem)
+	{       
+	    onBackPressed();
+	    return true;
+	}
+	
+	private class MiqaatListAdapter extends BaseAdapter {
+		public int getCount() {
+			return events.size();
+		}
+
+		public Object getItem(int arg0) {
+			return null;
+		}
+
+		public long getItemId(int position) {
+			return position;
+		}
+
+		public View getView(int position, View convertView, ViewGroup parent) {
+			View row = convertView;
+
+			if(row==null){
+				LayoutInflater inflater=getLayoutInflater();
+				row=inflater.inflate(R.layout.miqaat_event_row, parent, false);
+			}
+
+			((TextView)row.findViewById(R.id.date)).setText(dates.get(position));
+			((TextView)row.findViewById(R.id.event)).setText(events.get(position));
+			return row;
+		}
+	}
+	
+	
+	
+	
+	
 }

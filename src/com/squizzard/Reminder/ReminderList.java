@@ -6,9 +6,9 @@ import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.squizzard.Database.DatabaseHelper;
 import com.squizzard.MisriCalendar.R;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,7 +21,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class ReminderList extends Activity{
+public class ReminderList extends ActionBarActivity{
 	private ListView listView;
 	private ReminderAdapter adapter;
 	private ArrayList<Reminder> reminders;
@@ -30,6 +30,7 @@ public class ReminderList extends Activity{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.reminder_list);
 		
 		listView = (ListView)findViewById(R.id.reminder_list);
@@ -52,6 +53,8 @@ public class ReminderList extends Activity{
 	    }       
 	};
 	
+	
+	
 	@Override 
 	public void onResume(){
 		super.onResume();
@@ -72,6 +75,9 @@ public class ReminderList extends Activity{
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item){
 		switch(item.getItemId()){
+        case android.R.id.home: 
+            onBackPressed();
+            break;
 		case R.id.reminder_list_add:
 			Intent addReminderIntent = new Intent(getApplicationContext(), ReminderAdd.class);
 			startActivity(addReminderIntent);

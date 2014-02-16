@@ -1,52 +1,88 @@
 package com.squizzard.MisriCalendar;
 
+import java.util.ArrayList;
+
+import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.squizzard.Database.DatabaseHelper;
+import com.squizzard.Reminder.Reminder;
 import com.squizzard.util.DateUtil;
 
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 
 public class AlarmReceiver extends BroadcastReceiver{
-	private NotificationManager notificationManager;
-	private int icon = R.drawable.ic_launcher1;
+	public static final int ADD_DAYS_TODAY = 0;
+	public static final int ADD_DAYS_TOMORROW = 1;
+	
 	private Misri m  = new Misri();
+	private DatabaseHelper databaseHelper = null;
+	private Context context;
 		
-	@SuppressWarnings("deprecation")
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		String mAction = intent.getAction();
-		String todayMisri = m.getTodayMisri();
 		int todayNumber = m.getMisriOrdinal();
+		this.context = context;
+		ArrayList<Reminder> databaseReminders  = new ArrayList<Reminder>();
+		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
 		
 		if(mAction.equals(Attributes.MORNING_CHECK_MIQAAT_INTENT)){//check for today
-			if(DateUtil.priorityEventMap.containsKey(todayNumber)){
-		    long now = System.currentTimeMillis();
-		    String contentTitle[] =  DateUtil.priorityEventMap.get(todayNumber);
-		    notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-			Intent notificationIntent = new Intent(Attributes.NOTIFICATION_INTENT);
-			PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
-			Notification notification = new Notification(icon, contentTitle[0], now);//just show the icon in the notification with no text		
-			notification.setLatestEventInfo(context, contentTitle[0], todayMisri, contentIntent);
-			notification.flags = Notification.FLAG_AUTO_CANCEL; 
-			notificationManager.notify(Attributes.ALARM_NOTIFICATION, notification);
-			}	
-		}
-		else if(mAction.equals(Attributes.EVENING_CHECK_MIQAAT_INTENT)){//check for tomorrow
-			if(DateUtil.priorityEventMap.containsKey(todayNumber+1)){
-			    long now = System.currentTimeMillis();
-			    String contentTitle[] =  DateUtil.priorityEventMap.get(todayNumber+1);
-			    notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-				Intent notificationIntent = new Intent(Attributes.NOTIFICATION_INTENT);
-				PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
-				Notification notification = new Notification(icon, contentTitle[0], now);//just show the icon in the notification with no text		
-				notification.setLatestEventInfo(context, contentTitle[0], m.getTomorrowMisri(), contentIntent);
-				notification.flags = Notification.FLAG_AUTO_CANCEL; 
-				notificationManager.notify(Attributes.ALARM_NOTIFICATION, notification);
+			databaseReminders = getHelper().getReminderEvents(ADD_DAYS_TODAY);
+			String miqaatList[] =  DateUtil.priorityEventMap.get(todayNumber);
+			
+			if((miqaatList != null && miqaatList.length > 0) || databaseReminders.size() > 0){
+				mBuilder.setSmallIcon(R.drawable.ic_launcher1)
+				.setContentTitle("Events for today");
+
+				NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
+				for(int x = 0; x < miqaatList.length; x++){
+					inboxStyle.addLine(miqaatList[0]);
+				}
+				for(Reminder reminder: databaseReminders){
+					inboxStyle.addLine(reminder.getReminderText());
+				}
+				mBuilder.setStyle(inboxStyle);
 			}
 		}
+		else if(mAction.equals(Attributes.EVENING_CHECK_MIQAAT_INTENT)){//check for tomorrow
+			databaseReminders = getHelper().getReminderEvents(ADD_DAYS_TOMORROW);
+			String miqaatList[] =  DateUtil.priorityEventMap.get(todayNumber+1);
+			
+			if((miqaatList != null && miqaatList.length > 0) || databaseReminders.size() > 0){
+				mBuilder.setSmallIcon(R.drawable.ic_launcher1)
+				.setContentTitle("Events for tomorrow");
+
+				NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
+				for(int x = 0; x < miqaatList.length; x++){
+					inboxStyle.addLine(miqaatList[0]);
+				}
+				for(Reminder reminder: databaseReminders){
+					inboxStyle.addLine(reminder.getReminderText());
+				}
+				mBuilder.setStyle(inboxStyle);
+			}
+		}
+			
+			Intent resultIntent = new Intent(context, CalendarConvert.class);
+			TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+			stackBuilder.addParentStack(CalendarConvert.class);
+
+			stackBuilder.addNextIntent(resultIntent);
+			PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
+			mBuilder.setContentIntent(resultPendingIntent);
+			NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+			mNotificationManager.notify(Attributes.MORNING_ALARM_CODE, mBuilder.build());			
+	}
 	
+	protected DatabaseHelper getHelper() {
+		if (databaseHelper == null) {
+			databaseHelper = OpenHelperManager.getHelper(context, DatabaseHelper.class);
+		}
+		return databaseHelper;
 	}
 }

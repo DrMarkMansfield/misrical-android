@@ -125,11 +125,12 @@ public class DateUtil {
 		eventMap.put(Integer.valueOf(99), new String[]{"Urus Syedi AbdulRasul Shahid Baanswara"});
 		eventMap.put(Integer.valueOf(103), new String[]{"Urus Syedi Ismailji Shahid bin Abde Musa Godhra"});
 		eventMap.put(Integer.valueOf(105), new String[]{"Urus Syedna Jalal Shamsuddin AQ bin Hasan [25th Dai] Ahmedabad"});
+		priorityEventMap.put(Integer.valueOf(104), new String[]{"XXX"});
 		priorityEventMap.put(Integer.valueOf(109), new String[]{"Milad Dai Uz Zaman Syedna Mohammed Burhanuddin (TUS)"});
+		priorityEventMap.put(Integer.valueOf(105), new String[]{"YYY"});
 		eventMap.put(Integer.valueOf(111), new String[]{"Urus Syedna Musa Kalimuddin bin Syedna Abdul Tayyib Zakiyuddin AQ [36th Dai] Jamnagar","Urus Syedi Mulla Habibullah bin Shaikh Sultanali Bharuch"});
 		eventMap.put(Integer.valueOf(116), new String[]{"Urus Syedna Dawood Burhanuddin AQ bin Ajab Shah [26th Dai] Ahmedabad"});
 		eventMap.put(Integer.valueOf(117), new String[]{"Urus Kakaji Mulla Isa Bhai Partapghar"});
-		eventMap.put(Integer.valueOf(118), new String[]{"Salgirah Syedi Mazoon Saheb Khuzaima Bhaisaheb Qutbuddin"});
 
 		eventMap.put(Integer.valueOf(119), new String[]{"Urus Syedna Ahmed Al Mukaraam Yemen"});
 		eventMap.put(Integer.valueOf(121), new String[]{"Urus Syedi Qazi Khan bin Ali Sidhpur"});

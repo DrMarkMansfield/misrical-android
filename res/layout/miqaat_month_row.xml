@@ -1,32 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- This displays the 12 months -->
-<TwoLineListItem xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:minHeight="?android:attr/listPreferredItemHeight"
-    android:mode="twoLine"
-    android:paddingBottom="2dip"
-    android:paddingTop="2dip" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/text1"
+        android:id="@+id/month_text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="1dip"
         android:gravity="center_vertical"
         android:minHeight="?android:attr/listPreferredItemHeight"
-        android:paddingLeft="6dip"
-        android:textColor = "@color/monthListNumber"
-        android:textAppearance="?android:attr/textAppearance"/>
-
-    <TextView
-        android:id="@+id/text2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@android:id/text1"
-        android:layout_below="@android:id/text1"
-        android:textAppearance="?android:attr/textAppearanceSmall" 
-        android:divider="@color/monthListNumber"/>
-
-</TwoLineListItem>
+        android:paddingLeft="20dp"
+        android:textColor = "@color/monthListNumber"/>
+</LinearLayout>

@@ -308,7 +308,6 @@ public class Misri {
 		todayEvent = eventString;
 	}
 	
-
 	public String getTodayEvent(){
 		return todayEvent;
 	}
@@ -317,7 +316,6 @@ public class Misri {
 		return todayMisriDay;
 	}
 	
-
 	public void setTodayMisriDay(int todayMisriDay) {
 		this.todayMisriDay = todayMisriDay;
 	}
