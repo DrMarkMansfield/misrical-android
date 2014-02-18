@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_version">1.31</string>
-    <string name="app_version_string">Version 1.31</string>
+    <string name="app_version">2.0</string>
+    <string name="app_version_string">Version 2.0</string>
     <string name="app_name">MisriCal</string>
+    <string name="ouikka_email">misrical@ouikka.com</string>
     <string name="bearing_opt_label">Settings</string>
     <string name="set_gregorian_label">Set Gregorian</string>
     <string name="set_misri_label">Set Misri</string>
@@ -25,7 +26,7 @@
     
     <string name="miqaat_title">Miqaat</string>  
     <string name="about_title">MisriCal from OUIKKA</string> 
-    <string name="copyright_string">"Copyright \u00A9 2013 Ouikka Enterprises"</string>
+    <string name="copyright_string">"Copyright \u00A9 2014 Ouikka Apps"</string>
     <string name="bearing_number_label">Bearing:</string>
     <string name="bearing_updates_off">Updates: Off</string>
     <string name="bearing_updates_auto">Updates: Auto</string>
@@ -38,7 +39,7 @@
     <string name="test_miqaat_text">Test Miqaat</string>
     <string name="aboutIconDesc">Misri Icon</string>
     <string name="aboutLabel1">Misri/Gregorian Calendar Converter</string>
-    <string name="aboutEmailButtonLabel">E-MAIL</string>
+    <string name="aboutEmailButtonLabel">Contact Developer</string>
     <string name="aboutContactLabel">Contact/Feedback/Help</string>
     <string name="aboutWidgetLabel">Use the MisriCal Widget to see the date on your home screen!</string>
     <string name="auto">Auto</string>
@@ -77,6 +78,11 @@
     <string name="word_delete">Delete</string>
     <string name="word_edit">Edit</string>
     <string name="word_cancel">Cancel</string>
+    <string name="word_ok">OK</string>
     <string name="word_menu">Menu</string>
+    <string name="word_set">Set</string>
+    
+    <string name="symbol_plus">+</string>
+    <string name="symbol_minus">-</string>
     
 </resources>

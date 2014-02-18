@@ -14,40 +14,47 @@
 
             <Button
                 android:id="@+id/setGregorianButton"
+                android:background="@drawable/green_button_selector"
                 android:layout_width="0dp"
                 android:layout_weight="5"
                 android:text="@string/set_gregorian_label" />
 
             <Button
                 android:id="@+id/setMisriButton"
+                android:background="@drawable/green_button_selector"
                 android:layout_width="0dp"
                 android:layout_weight="5"
                 android:text="@string/set_misri_label" />
+            
+            <Button
+                android:id="@+id/todayButton"
+                android:background="@drawable/green_button_selector"
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:text="@string/Today" />
 
             <Button
                 android:id="@+id/dayMinusButton"
+                android:background="@drawable/green_button_selector"
                 android:layout_width="0dp"
                 android:layout_weight="5"
                 android:text="@string/DayMinus" />
 
             <Button
                 android:id="@+id/dayPlusButton"
+                android:background="@drawable/green_button_selector"
                 android:layout_width="0dp"
                 android:layout_weight="5"
                 android:text="@string/DayPlus" />
-
-            <Button
-                android:id="@+id/todayButton"
-                android:layout_width="0dp"
-                android:layout_weight="5"
-                android:text="@string/Today" />
+            
         </TableRow>
     </TableLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp" >
 
         <Button
             android:id="@+id/sunButton"

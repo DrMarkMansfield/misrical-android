@@ -18,7 +18,7 @@
                 android:id="@+id/dayMinus"
                 android:layout_width="40dip"
                 android:layout_height="50dip"
-                android:text="-"/>
+                android:text="@string/symbol_minus"/>
 
             <EditText
                 android:id="@+id/dayText"
@@ -31,7 +31,7 @@
                 android:id="@+id/dayPlus"
                 android:layout_width="40dip"
                 android:layout_height="50dip"
-                android:text="+"/>
+                android:text="@string/symbol_plus"/>
         </TableRow>
 
         <TableRow
@@ -45,7 +45,7 @@
                 android:id="@+id/monthMinus"
                 android:layout_width="40dip"
                 android:layout_height="50dip"
-                android:text="-"/>
+                android:text="@string/symbol_minus"/>
 
             <EditText
                 android:id="@+id/monthText"
@@ -57,7 +57,7 @@
                 android:id="@+id/monthPlus"
                 android:layout_width="40dip"
                 android:layout_height="50dip"
-                android:text="+"/>
+                android:text="@string/symbol_plus"/>
         </TableRow>
 
         <TableRow
@@ -71,7 +71,7 @@
                 android:id="@+id/yearMinus"
                 android:layout_width="40dip"
                 android:layout_height="50dip"
-                android:text="-"/>
+                android:text="@string/symbol_minus"/>
 
             <EditText
                 android:id="@+id/yearText"
@@ -85,7 +85,7 @@
                 android:id="@+id/yearPlus"
                 android:layout_width="40dip"
                 android:layout_height="50dip"
-                android:text="+"/>
+                android:text="@string/symbol_plus"/>
         </TableRow>
     </TableLayout>
 
@@ -93,13 +93,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="150dp">
-
-        <Button
+      <Button
+        android:id="@+id/misriCancel"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="0dp"
+        android:layout_weight="2"
+        android:text="@string/word_cancel"/>
+      
+      <Button
             android:id="@+id/misriSet"
-            android:layout_width="120dip"
-            android:layout_height="50dip"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
             android:layout_weight="2"
-            android:text="Done"/>
+            android:text="@string/word_set"/>
+      
     </LinearLayout>
 
 </RelativeLayout>

@@ -15,16 +15,6 @@
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
       android:orientation="vertical">
-	<Button
-        android:id="@+id/miqaatCheckToday"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/settings_check_today"/>
-		<Button
-        android:id="@+id/miqaatCheckTomorrow"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/settings_check_tomorrow"/>
 	<TableLayout android:id="@+id/tableLayout1"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
 		android:stretchColumns = "*" android:shrinkColumns = "*">

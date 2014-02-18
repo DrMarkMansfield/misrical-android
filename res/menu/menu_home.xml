@@ -7,17 +7,17 @@
         yourapp:showAsAction="always"
         android:showAsAction="always">
         <menu>
+     <item android:id="@+id/reminders" 
+        android:title="@string/reminder_label"
+        android:showAsAction="always"
+        android:icon="@drawable/ic_action_event"
+        yourapp:icon="@drawable/ic_action_event"
+        yourapp:showAsAction="always"/>
     <item android:id="@+id/miqaat" 
         android:title="@string/miqaat_opt_label" 
         android:icon="@android:drawable/ic_menu_month"
         yourapp:icon="@android:drawable/ic_menu_month"
         android:showAsAction="always"
-        yourapp:showAsAction="always"/>
-    <item android:id="@+id/reminders" 
-        android:title="@string/reminder_label"
-        android:showAsAction="always"
-        android:icon="@drawable/ic_action_event"
-        yourapp:icon="@drawable/ic_action_event"
         yourapp:showAsAction="always"/>
     <item android:id="@+id/bearings" 
         android:title="@string/bearing_opt_label" 

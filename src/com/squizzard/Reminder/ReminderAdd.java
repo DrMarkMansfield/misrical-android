@@ -1,8 +1,6 @@
 package com.squizzard.Reminder;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
@@ -11,9 +9,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -46,6 +47,7 @@ public class ReminderAdd extends ActionBarActivity implements DatePickerDialog.O
 	private DatabaseHelper databaseHelper;
 	private int reminderId = -1;
 	private Reminder savedReminder = null;
+	private LinearLayout dateButtonRow;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -63,7 +65,8 @@ public class ReminderAdd extends ActionBarActivity implements DatePickerDialog.O
 		rbMisri.setChecked(false);
 		tvGregorian = (TextView)findViewById(R.id.reminder_add_gregorian_text);
 		tvMisri = (TextView)findViewById(R.id.reminder_add_misri_text);
-
+		dateButtonRow = (LinearLayout)findViewById(R.id.reminder_add_button_row);
+		
 		reminderId = getIntent().getIntExtra(ReminderDisplay.REMINDER_ID, -1);
 		if(reminderId != -1){
 			savedReminder = getHelper().getReminder(reminderId);
@@ -102,9 +105,13 @@ public class ReminderAdd extends ActionBarActivity implements DatePickerDialog.O
         		return true;
 	        case R.id.reminder_save:
 	        	if(etReminder.getText().toString().trim().length() <= 0){
-					etReminder.setError(getString(R.string.reminder_add_text_empty));
+	        		Animation shake = AnimationUtils.loadAnimation(ReminderAdd.this, R.anim.shake);
+	        		etReminder.startAnimation(shake);
+					//etReminder.setError(getString(R.string.reminder_add_text_empty));
 				}else if(saveGregorianDay == 0 || saveGregorianMonth == 0 || saveMisriDay ==  0 || saveMisriMonth == 0){
-					AlertDialog.Builder builder = new AlertDialog.Builder(ReminderAdd.this);
+					Animation shake = AnimationUtils.loadAnimation(ReminderAdd.this, R.anim.shake);
+					dateButtonRow.startAnimation(shake);
+				/*	AlertDialog.Builder builder = new AlertDialog.Builder(ReminderAdd.this);
 					builder.setTitle(getString(R.string.reminder_add_incomplete_title));
 					builder.setMessage(R.string.reminder_add_incomplete_message);
 					builder.setPositiveButton(getString(R.string.word_ok), new DialogInterface.OnClickListener() {
@@ -112,7 +119,7 @@ public class ReminderAdd extends ActionBarActivity implements DatePickerDialog.O
 				              dialog.dismiss();
 				           }
 				       });
-					builder.show();
+					builder.show();*/
 				}
 				else{
 					char type = TYPE_GREGORIAN;

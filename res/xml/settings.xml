@@ -14,5 +14,10 @@
         android:defaultValue="false"
         android:key="miqaat_alert_preference"
         android:title="Enable Miqaat Alerts"/>
+    
+    <Preference
+    android:key="location_settings_preference"
+    android:title="Go To Location Settings" >
+</Preference>
 
 </PreferenceScreen>

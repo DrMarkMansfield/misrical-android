@@ -10,36 +10,32 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.provider.Settings;
 import android.widget.TextView;
 
-public class BearingPrefs extends PreferenceActivity implements OnClickListener {
+public class BearingPrefs extends PreferenceActivity{
 
 	public enum BearingOptions{ON_TOUCH, ALWAYS_ON, OFF};
 	private TextView meccaBearingText;
 	private TextView providerText;
-	private Button btnCheckToday;
-	private Button btnCheckTomorrow;
 	private Preference alertPreference;
+	private Preference locationPreference;
 	private DatabaseHelper databaseHelper = null;
 
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
+		setTheme(R.style.CustomActionBarTheme);
 		setContentView(R.layout.bearinginfo);
+		
 		addPreferencesFromResource(R.xml.settings);
 		providerText = (TextView) findViewById(R.id.provider);
 		meccaBearingText = (TextView) findViewById(R.id.meccaBearing);
-		btnCheckToday = (Button)findViewById(R.id.miqaatCheckToday);
-		btnCheckToday.setOnClickListener(this);
-		btnCheckTomorrow = (Button)findViewById(R.id.miqaatCheckTomorrow);
-		btnCheckTomorrow.setOnClickListener(this);
 		providerText.setText(getIntent().getStringExtra("PROVIDER"));
 		meccaBearingText.setText(getIntent().getStringExtra("BEARING_TO_MECCA"));
 		alertPreference = getPreferenceManager().findPreference(Attributes.MIQAATS_ALERT_PREFERENCE);
+		locationPreference = getPreferenceManager().findPreference(Attributes.LOCATION_SETTINGS_PREFERENCE);
 
 		alertPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 			public boolean onPreferenceClick(Preference preference) {
@@ -53,6 +49,15 @@ public class BearingPrefs extends PreferenceActivity implements OnClickListener 
 				return true;
 			}
 		});
+		
+		locationPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+	        public boolean onPreferenceClick(Preference preference) {
+	            Intent viewIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+	            startActivity(viewIntent);
+
+	            return true;
+	        }
+	    });
 	}
 
 	public static BearingOptions getBearingMode(Context context){
@@ -75,20 +80,6 @@ public class BearingPrefs extends PreferenceActivity implements OnClickListener 
 
 	public static boolean miqaatAlertsEnabled(Context context){
 		return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(context.getString(R.string.miqaat_alert_preference), false);
-	}
-
-	@Override
-	public void onClick(View v) {
-		switch(v.getId()){
-		case R.id.miqaatCheckToday:
-			Intent morningEventIntent= new Intent(Attributes.MORNING_CHECK_MIQAAT_INTENT);
-			sendBroadcast(morningEventIntent);	
-			break;
-		case R.id.miqaatCheckTomorrow:
-			Intent eveningEventIntent= new Intent(Attributes.EVENING_CHECK_MIQAAT_INTENT);
-			sendBroadcast(eveningEventIntent);
-			break;
-		}
 	}
 	
 	protected DatabaseHelper getHelper() {

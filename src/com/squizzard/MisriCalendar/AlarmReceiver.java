@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.squizzard.Database.DatabaseHelper;
 import com.squizzard.Reminder.Reminder;
+import com.squizzard.Reminder.ReminderList;
 import com.squizzard.util.DateUtil;
 
 import android.app.NotificationManager;
@@ -27,6 +28,7 @@ public class AlarmReceiver extends BroadcastReceiver{
 	public void onReceive(Context context, Intent intent) {
 		String mAction = intent.getAction();
 		int todayNumber = m.getMisriOrdinal();
+		int numEvents = 0;
 		this.context = context;
 		ArrayList<Reminder> databaseReminders  = new ArrayList<Reminder>();
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
@@ -40,13 +42,21 @@ public class AlarmReceiver extends BroadcastReceiver{
 				.setContentTitle("Events for today");
 
 				NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
-				for(int x = 0; x < miqaatList.length; x++){
-					inboxStyle.addLine(miqaatList[0]);
+				if(miqaatList != null){
+					for(int x = 0; x < miqaatList.length; x++){
+						inboxStyle.addLine(miqaatList[0]);
+						numEvents++;
+					}
 				}
 				for(Reminder reminder: databaseReminders){
 					inboxStyle.addLine(reminder.getReminderText());
+					numEvents++;
 				}
 				mBuilder.setStyle(inboxStyle);
+				mBuilder.setNumber(numEvents);
+			}else{
+				Intent eveningEventIntent= new Intent(Attributes.NO_MIQAAT_TODAY);
+				context.sendBroadcast(eveningEventIntent);
 			}
 		}
 		else if(mAction.equals(Attributes.EVENING_CHECK_MIQAAT_INTENT)){//check for tomorrow
@@ -58,17 +68,24 @@ public class AlarmReceiver extends BroadcastReceiver{
 				.setContentTitle("Events for tomorrow");
 
 				NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
-				for(int x = 0; x < miqaatList.length; x++){
-					inboxStyle.addLine(miqaatList[0]);
+				if(miqaatList != null){
+					for(int x = 0; x < miqaatList.length; x++){
+						inboxStyle.addLine(miqaatList[0]);
+						numEvents++;
+					}
 				}
 				for(Reminder reminder: databaseReminders){
 					inboxStyle.addLine(reminder.getReminderText());
+					numEvents++;
 				}
 				mBuilder.setStyle(inboxStyle);
+			}else{
+				Intent eveningEventIntent= new Intent(Attributes.NO_MIQAAT_TOMORROW);
+				context.sendBroadcast(eveningEventIntent);
 			}
 		}
 			
-			Intent resultIntent = new Intent(context, CalendarConvert.class);
+			Intent resultIntent = new Intent(context, ReminderList.class);
 			TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
 			stackBuilder.addParentStack(CalendarConvert.class);
 

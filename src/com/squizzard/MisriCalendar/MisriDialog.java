@@ -25,6 +25,7 @@ public class MisriDialog extends Dialog implements OnClickListener{
 	private Button yearMinusButton;
 	private Button yearPlusButton;
 	private Button setButton;
+	private Button cancelButton;
 	Misri misriConverter;
 	private static final int MIN_DAY = 1;
 
@@ -48,6 +49,8 @@ public class MisriDialog extends Dialog implements OnClickListener{
 		yearPlusButton.setOnClickListener(this);
 		setButton = (Button)findViewById(R.id.misriSet);
 		setButton.setOnClickListener(this);
+		cancelButton = (Button)findViewById(R.id.misriCancel);
+		cancelButton.setOnClickListener(this);
 		
 		dayText = (EditText)findViewById(R.id.dayText);
 		monthText = (EditText)findViewById(R.id.monthText);
@@ -92,6 +95,9 @@ public class MisriDialog extends Dialog implements OnClickListener{
 		case R.id.misriSet:
 			validate();
 			setDate();
+			break;
+		case R.id.misriCancel:
+			this.dismiss();
 			break;
 		}
 		

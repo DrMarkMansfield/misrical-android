@@ -5,7 +5,6 @@ import com.squizzard.MisriCalendar.BearingPrefs.BearingOptions;
 import com.squizzard.Reminder.ReminderList;
 import com.squizzard.util.DateUtil;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -177,13 +176,15 @@ public class CalendarConvert extends ActionBarActivity implements OnClickListene
 		);
 	} 
 
+	@SuppressWarnings("deprecation")
 	private void highLightDay(Calendar c2) {
 		int today = c2.get(Calendar.DAY_OF_WEEK);//Sunday is 1
 		for(int d=0;d<7;d++){
 			if(d==today-1){
-				weekdayButtons[d].setBackgroundColor(getResources().getColor(R.color.todayButton));
+				//weekdayButtons[d].setBackgroundColor(getResources().getColor(R.color.green_button));
+				weekdayButtons[d].setBackgroundDrawable(getResources().getDrawable(R.drawable.day_selected_button));
 			}
-			else weekdayButtons[d].setBackgroundColor(getResources().getColor(R.color.notTodayButton));
+			else weekdayButtons[d].setBackgroundColor(getResources().getColor(R.color.black));
 		}
 	}
 	
@@ -199,7 +200,7 @@ public class CalendarConvert extends ActionBarActivity implements OnClickListene
 		location=null;
 		bearingToMeccaString="";
 		//TODO put this back in
-/*
+
 		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE); 
 		sensorManager.registerListener(this, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
 		sensorManager.registerListener(this, magneticSensor, SensorManager.SENSOR_DELAY_NORMAL);
@@ -238,11 +239,11 @@ public class CalendarConvert extends ActionBarActivity implements OnClickListene
 		}
 		else{
 			bearingToMeccaString = "Unavailable";
-			Toast toast = Toast.makeText(getApplicationContext(), "Mecca pointer disabled. Enable Network/WIFI/GPS to determine location.", Toast.LENGTH_SHORT);
+			Toast toast = Toast.makeText(getApplicationContext(), "Mecca pointer disabled. Go to the settings menu to enable Network/WIFI/GPS location services.", Toast.LENGTH_LONG);
 			toast.show();
 			LightingColorFilter lcf = new LightingColorFilter( 0x44555555, 0); 
 			arrowImageMecca.setColorFilter(lcf);
-		}*/
+		}
 	}
 
 	@SuppressWarnings("deprecation")
@@ -357,8 +358,8 @@ public class CalendarConvert extends ActionBarActivity implements OnClickListene
 			Intent intent = new Intent(android.content.Intent.ACTION_SEND);
 			intent.setType("text/*");
 			intent.putExtra(android.content.Intent.EXTRA_TEXT, "Android app for converting between Misri and Gregorian dates: \nhttps://market.android.com/details?id=com.squizzard.MisriCalendar");
-			intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "MisriCal - calendar conversion for Andorid");
-			startActivity(Intent.createChooser(intent, "Share via"));
+			intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "MisriCal for Android");
+			startActivity(Intent.createChooser(intent, "Share using..."));
 			break;
 		case R.id.reminders:
 			Intent reminderIntent = new Intent(this, ReminderList.class);

@@ -39,7 +39,7 @@ public class About extends ActionBarActivity implements OnClickListener{
 			messageString += "\n Display: " + android.os.Build.DISPLAY;
 			messageString += "\n Manufacturer: " + android.os.Build.MANUFACTURER;
 			emailIntent.setType("plain/text");
-			emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"ouikka@gmail.com"});
+			emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{getString(R.string.ouikka_email)});
 			emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "MisriCal "+ getString(R.string.app_version));
 			emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, messageString);
 			startActivity(Intent.createChooser(emailIntent, "Send mail..."));

@@ -50,10 +50,12 @@
         android:id="@+id/emailButton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="40dip"
-        android:layout_marginRight="40dip"
-        android:layout_marginTop="65dip"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="65dp"
+        android:layout_marginBottom="10dp"
         android:autoLink="email"
+        android:background="@drawable/green_button_selector"
         android:text="@string/aboutEmailButtonLabel">
     </Button>
 
@@ -64,41 +66,4 @@
         android:gravity="center"
         android:text="@string/aboutContactLabel">
     </TextView>
-
-
-
-        <!--  TextView
-        android:id="@+id/tips"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingTop="20dip"
-        android:text="@string/tips"/>
-        
-       <TextView
-        android:id="@+id/tips2"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingTop="5dip"
-        android:text="@string/tips2"/-->
-    
-    <!--  Button
-        android:id="@+id/webButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dip"
-        android:layout_marginRight="40dip"
-        android:layout_marginTop="90dip"
-        android:text="@string/download_string">
-    </Button>
-    
-      <TextView
-        android:id="@+id/downloadFeatures"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingTop="5dip"
-        android:text="@string/misricalplus_features"/-->
-
 </LinearLayout>

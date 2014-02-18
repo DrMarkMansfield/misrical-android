@@ -11,5 +11,6 @@
         android:gravity="center_vertical"
         android:minHeight="?android:attr/listPreferredItemHeight"
         android:paddingLeft="20dp"
-        android:textColor = "@color/monthListNumber"/>
+        android:textSize="20sp"
+        android:textColor = "@color/green_button"/>
 </LinearLayout>
