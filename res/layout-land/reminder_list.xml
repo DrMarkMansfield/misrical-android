@@ -17,16 +17,17 @@
         android:layout_marginRight="5dp"
         android:layout_weight="0.5"
         android:background="@drawable/green_button_selector"
+        android:textColor="@drawable/button_text_color"
         android:text="@string/settings_check_today" />
 
     <Button
         android:id="@+id/miqaatCheckTomorrow"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/miqaatCheckToday"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_weight="0.5"
+        android:textColor="@drawable/button_text_color"
         android:background="@drawable/green_button_selector"
         android:text="@string/settings_check_tomorrow" />
     </LinearLayout>

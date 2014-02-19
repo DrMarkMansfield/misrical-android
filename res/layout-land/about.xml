@@ -39,6 +39,8 @@
         android:layout_marginRight="40dip"
         android:layout_marginTop="40dip"
         android:autoLink="email"
+        android:textColor="@drawable/button_text_color"
+        android:background="@drawable/green_button_selector"
         android:text="@string/aboutEmailButtonLabel">
     </Button>
 

@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:text="@string/settings_check_today"
         android:background="@drawable/green_button_selector"
+        android:textColor="@drawable/button_text_color"
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"/>
@@ -19,7 +20,8 @@
         android:text="@string/settings_check_tomorrow"
         android:layout_below="@id/miqaatCheckToday"
         android:background="@drawable/green_button_selector"
-         android:layout_marginLeft="5dp"
+        android:textColor="@drawable/button_text_color"
+        android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"/>
 
     <ListView

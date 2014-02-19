@@ -199,7 +199,6 @@ public class CalendarConvert extends ActionBarActivity implements OnClickListene
 		super.onResume();
 		location=null;
 		bearingToMeccaString="";
-		//TODO put this back in
 
 		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE); 
 		sensorManager.registerListener(this, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);

@@ -35,6 +35,25 @@
 				android:textSize="14sp" />
 		</TableRow>
 		</TableLayout>
+			<TableLayout
+		    android:layout_width="wrap_content" android:layout_height="wrap_content">
+		<TableRow>
+			<TextView android:padding="5dip" android:layout_height="wrap_content"
+				android:text="@string/tips" android:layout_width="wrap_content"
+				android:textSize="14sp" />
+			<TextView android:padding="5dip" 
+				android:layout_height="wrap_content" android:layout_width="wrap_content"
+				android:textSize="14sp" />
+		</TableRow>
+		<TableRow>
+			<TextView android:padding="5dip" android:layout_height="wrap_content"
+				android:text="@string/tips2" android:layout_width="wrap_content"
+				android:textSize="14sp" />
+			<TextView android:padding="5dip" android:id="@+id/accuracy"
+				android:layout_height="wrap_content" android:layout_width="wrap_content"
+				android:textSize="14sp" />
+		</TableRow>
+	</TableLayout>
 	</LinearLayout>
 	</ScrollView>
 </LinearLayout>
